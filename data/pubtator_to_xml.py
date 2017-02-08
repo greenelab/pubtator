@@ -210,7 +210,4 @@ if __name__ == '__main__':
     parser.add_argument("--output", help="File path for destination of output.", required=True)
     args = parser.parse_args()
 
-    if not(args.documents):
-        raise Exception("PLEASE GIVE FILE INPUT PATH")
-
     convert_pubtator(args.documents, args.output)

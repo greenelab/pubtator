@@ -21,7 +21,7 @@ def extract_annotations(xml_file, output_file):
     """
     with open(output_file, "w") as csvfile:
         fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
         tag_generator = ET.iterparse(xml_file, tag="document")
 
@@ -54,16 +54,9 @@ def extract_annotations(xml_file, output_file):
 # Main
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extracts the annotations from the BioC xml format')
-    parser.add_argument("--input", help="File path pointing to input file.", type=str)
-    parser.add_argument("--output", nargs="?", help="File path for destination of output.")
+    parser.add_argument("--input", help="File path pointing to input file.", type=str, required=True)
+    parser.add_argument("--output", nargs="?", help="File path for destination of output.", required=True)
 
     args = parser.parse_args()
-
-    # check if user gave arguments
-    if not(args.input):
-        raise Exception("PLEASE GIVE FILE INPUT PATH")
-
-    if not(args.output):
-        raise Exception("PLEASE GIVE FILE OUTPUT PATH")
 
     extract_annotations(args.input, args.output)
