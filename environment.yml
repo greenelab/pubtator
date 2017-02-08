@@ -1,4 +1,4 @@
-name: snorkeling
+name: pubtator
 dependencies:
 - beautifulsoup4=4.5.1
 - enum34=1.1.6
