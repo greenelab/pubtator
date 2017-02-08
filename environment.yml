@@ -4,4 +4,5 @@ dependencies:
 - future=0.16.0
 - lxml=3.7.2
 - pip:
+    - PyBioC==1.2.4
     - tqdm==4.11.2
