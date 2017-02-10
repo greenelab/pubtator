@@ -121,3 +121,18 @@
 100018	908	911	Na+	Chemical	
 100018	984	997	tetracyclines	Chemical	MESH:D013754
 100018	1111	1114	MNC	Chemical	
+
+27075942|t|Beh  et's disease: A comprehensive review with a focus on epidemiology, etiology and clinical features, and management of mucocutaneous lesions.
+27075942|a|UNASSIGNED: Beh  et's disease (BD) is a chronic, relapsing, inflammatory multisystem disease of unknown etiology. Oral ulcers, genital ulcers, cutaneous lesions, and ocular and articular involvement are the most frequent features of the disease. Mucocutaneous lesions are considered hallmarks of the disease, and often precede other manifestations. Therefore, their recognition may permit earlier diagnosis and treatment with beneficial results for prognosis. BD is particularly prevalent in "Silk Route" populations but has a global distribution. The disease usually starts around the third or fourth decade of life. Sex distribution is roughly equal. The diagnosis is based on clinical criteria, as there is no pathognomonic test. Genetic factors have been investigated extensively, and association with human leukocyte antigen (HLA)-B51 is still known as the strongest genetic susceptibility factor. The T-helper 17 and interleukin (IL)-17 pathways are active, and play an important role, particularly in acute attacks of BD. Neutrophil activity is increased in BD, and the affected organs show a significant neutrophil and lymphocyte infiltration. HLA-B51 association and increased IL-17 response are thought to play a role in neutrophil activation. Treatment is mainly based on the suppression of inflammatory attacks of the disease using immunomodulatory and immunosuppressive agents. Although treatment has become much more effective in recent years with the introduction of newer drugs, BD is still associated with considerable morbidity and increased mortality. Male sex, younger age of onset and increased number of organs involved at the diagnosis are associated with a more severe disease and, therefore, require more aggressive treatment.
+27075942	605	607	BD	Disease	MESH:D000544
+27075942	1170	1172	BD	Disease	MESH:D000544
+27075942	1210	1212	BD	Disease	MESH:D000544
+27075942	1640	1642	BD	Disease	MESH:D000544
+27075942	157	174	Beh  et's disease	Disease	MESH:D000544
+27075942	176	178	BD	Disease	MESH:D000544
+27075942	259	286	Oral ulcers, genital ulcers	Disease	MESH:D014456
+27075942	0	17	Beh  et's disease	Disease	MESH:D000544
+27075942	122	143	mucocutaneous lesions	Disease	MESH:D001927
+27075942	957	984	leukocyte antigen (HLA)-B51	Gene	3126
+27075942	1068	1087	interleukin (IL)-17	Gene	3605
+27075942	1331	1336	IL-17	Gene	3605
