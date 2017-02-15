@@ -37,17 +37,6 @@
 100003	158	170	endocarditis	Disease	MESH:D004696
 100003	83	88	human	Species	9606
 
-100012|t|Cellular Cl content and concentration of amphibian skeletal and heart muscle.
-100012|a|Toads (Bufo marinus) and frogs (Rana pipiens pipiens) were given intraperitoneal injections of Na36Cl and Na235SO4. After in vivo equilibration for 20--180 min, the animals were pithed, and their ventricular and semitendinosus muscles were excised. Measurements of total Cl (by titrimetry) and 36Cl (by radioassay) showed that specific radioactivities of plasma and mus les approached equality within 1 h after injection for toad skeletal and heart muscle and frog ventricles, indicating complete exchange of cellular Cl with 36Cl. From the simultaneously measured muscle water contents and 35SO4 spaces, intracellular Cl concentrations in vivo (in mumol/g cell water) for semitendinosus and ventricular muscles were calculated to be, respectively, 1.4 +/- 0.3 and 2.3 +/- 0.8 for Bufo and 1.7 +/- 0.7 and 4.8 +/- 2.4 for Rana. In view of these low values, active cellular Cl accumulation seems improbable, but cannot be rigorously excluded without simultaneous membrane potential and intracellular ion activity measurements. A high concentration of Cl in the sarcoplasmic reticulum of skeletal muscle is also inconsistent with these measurements.
-100012	9	11	Cl	Chemical	
-100012	173	179	Na36Cl	Chemical	
-100012	184	192	Na235SO4	Chemical	
-100012	349	351	Cl	Chemical	
-100012	596	598	Cl	Chemical	
-100012	697	699	Cl	Chemical	
-100012	951	953	Cl	Chemical	
-100012	1128	1130	Cl	Chemical	
-
 100013|t|Transplantation of pancreatic beta-cells prevents development of hypothalamic obesity in rats.
 100013|a|The present experiments have tested the hypothesis that ventromedial hypothalamic (VMH) lesions enhance insulin secretion by neural mechanisms. Rats were made diabetic by injecting streptozotocin to destroy their own pancreatic beta-cells. Subsequently, transplants of fetal pancreatic tissue were placed under the renal capsule. VMH lesions were placed in rats whose diabetes was cured with transplants as well as sham-transplanted animals. The animals were followed for 4 wk. The lesioned rats with pancreatic transplants gained no more weight than the sham-operated controls. There was no significant rise in insulin in the transplanted rats after VMH lesioning, but the VMH lesioned rats with intact pancreatic tissue showed the expected rise in insulin. Food intake rose 71% in the VMH lesioned rats with intact beta-cells, but only 23% in the VMH lesioned rats with transplants. Hypertrophy of the pancreatic islets was also observed in the VMH lesioned rats with an intact pancreas, but was not found in the VMH lesioned rats with a transplanted pancreas. Thus, transplantation of pancreatic tissue beneath the renal capsule of diabetic rats prevented the characteristic hyperphagia, hyperinsulinemia, and obesity in VMH lesioned rats whose pancreas was free from intact innervation. The results support the hypothesis that neural mediation of the rise in insulin is the primary factor in the development of hypothalamic obesity.
 100013	276	290	streptozotocin	Chemical	MESH:D013311
@@ -85,39 +74,17 @@
 100015	390	399	potassium	Chemical	MESH:D011188
 100015	289	305	Saimiri sciureus	Species	9521
 
-100018|t|Tetracycline-induced inhibition of Na+ transport in the toad urinary bladder.
-100018|a|The effects of three tetracyclines, demethylchlortetracycline (DMC), minocycline (MNC), and oxytetracycline (OTC), on Na+ transport (measured as short-circuit current) were examined in toad urinary bladders mounted in modified Ussing chambers. During a 1-h incubation period serosal DMC (but not MNC or OTC) inhibited basal Na+ transport, whereas MNC (but not DMC or OTC) inhibited ADH-stimulated Na+ transport. MNC also inhibited cyclic AMP-stimulated Na+ transport. During longer incubation periods all three drugs inhibited basal Na+ transport. The DMC-induced inhibition of basal Na+ transport and the MNC-induced inhibition of ADH-stimulated Na+ transport were paralleled by an inhibition of the active conductance of the bladders. Thus, although all three drugs inhibit basal Na+ transport, only MNC inhibits ADH-stimulated Na+ transport. This effect does not correlate with the known effects of the tetracyclines on ADH-stimulated water flow or with drug-protein binding, and may be related to the greater lipid solubility of MNC.
-100018	0	12	Tetracycline	Chemical	MESH:D013752
-100018	35	37	Na	Chemical	
-100018	35	38	Na+	Chemical	
-100018	99	112	tetracyclines	Chemical	MESH:D013754
-100018	114	139	demethylchlortetracycline	Chemical	MESH:D003707
-100018	141	144	DMC	Chemical	MESH:C004944
-100018	147	158	minocycline	Chemical	MESH:D008911
-100018	160	163	MNC	Chemical	
-100018	170	185	oxytetracycline	Chemical	MESH:D010118
-100018	187	190	OTC	Chemical	
-100018	196	199	Na+	Chemical	
-100018	361	364	DMC	Chemical	MESH:C004944
-100018	374	377	MNC	Chemical	
-100018	381	384	OTC	Chemical	
-100018	402	404	Na	Chemical	
-100018	402	405	Na+	Chemical	
-100018	425	428	MNC	Chemical	
-100018	438	441	DMC	Chemical	MESH:C004944
-100018	445	448	OTC	Chemical	
-100018	475	478	Na+	Chemical	
-100018	490	493	MNC	Chemical	
-100018	509	519	cyclic AMP	Chemical	MESH:D000242
-100018	531	534	Na+	Chemical	
-100018	611	614	Na+	Chemical	
-100018	630	633	DMC	Chemical	MESH:C004944
-100018	662	665	Na+	Chemical	
-100018	662	664	Na	Chemical	
-100018	684	687	MNC	Chemical	
-100018	725	728	Na+	Chemical	
-100018	860	863	Na+	Chemical	
-100018	880	883	MNC	Chemical	
-100018	908	911	Na+	Chemical	
-100018	984	997	tetracyclines	Chemical	MESH:D013754
-100018	1111	1114	MNC	Chemical	
+27075942|t|Beh  et's disease: A comprehensive review with a focus on epidemiology, etiology and clinical features, and management of mucocutaneous lesions.
+27075942|a|UNASSIGNED: Beh  et's disease (BD) is a chronic, relapsing, inflammatory multisystem disease of unknown etiology. Oral ulcers, genital ulcers, cutaneous lesions, and ocular and articular involvement are the most frequent features of the disease. Mucocutaneous lesions are considered hallmarks of the disease, and often precede other manifestations. Therefore, their recognition may permit earlier diagnosis and treatment with beneficial results for prognosis. BD is particularly prevalent in "Silk Route" populations but has a global distribution. The disease usually starts around the third or fourth decade of life. Sex distribution is roughly equal. The diagnosis is based on clinical criteria, as there is no pathognomonic test. Genetic factors have been investigated extensively, and association with human leukocyte antigen (HLA)-B51 is still known as the strongest genetic susceptibility factor. The T-helper 17 and interleukin (IL)-17 pathways are active, and play an important role, particularly in acute attacks of BD. Neutrophil activity is increased in BD, and the affected organs show a significant neutrophil and lymphocyte infiltration. HLA-B51 association and increased IL-17 response are thought to play a role in neutrophil activation. Treatment is mainly based on the suppression of inflammatory attacks of the disease using immunomodulatory and immunosuppressive agents. Although treatment has become much more effective in recent years with the introduction of newer drugs, BD is still associated with considerable morbidity and increased mortality. Male sex, younger age of onset and increased number of organs involved at the diagnosis are associated with a more severe disease and, therefore, require more aggressive treatment.
+27075942	605	607	BD	Disease	MESH:D000544
+27075942	1170	1172	BD	Disease	MESH:D000544
+27075942	1210	1212	BD	Disease	MESH:D000544
+27075942	1640	1642	BD	Disease	MESH:D000544
+27075942	157	174	Beh  et's disease	Disease	MESH:D000544
+27075942	176	178	BD	Disease	MESH:D000544
+27075942	259	286	Oral ulcers, genital ulcers	Disease	MESH:D014456
+27075942	0	17	Beh  et's disease	Disease	MESH:D000544
+27075942	122	143	mucocutaneous lesions	Disease	MESH:D001927
+27075942	957	984	leukocyte antigen (HLA)-B51	Gene	3126
+27075942	1068	1087	interleukin (IL)-17	Gene	3605
+27075942	1331	1336	IL-17	Gene	3605
