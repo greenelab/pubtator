@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?><!DOCTYPE collection SYSTEM 'BioC.dtd'>
 <collection>
   <source>Pubtator</source>
-  <date>2017/02/08</date>
+  <date>2017/02/14</date>
   <key>Pubtator.key</key>
 <document>
   <id>1</id>
@@ -204,67 +204,6 @@
       <infon key="type">Species</infon>
       <location offset="83" length="5"/>
       <text>human</text>
-    </annotation>
-  </passage>
-</document>
-<document>
-  <id>100012</id>
-  <passage>
-    <infon key="type">title</infon>
-    <offset>0</offset>
-    <text>Cellular Cl content and concentration of amphibian skeletal and heart muscle.</text>
-  </passage>
-  <passage>
-    <infon key="type">abstract</infon>
-    <offset>Toads (Bufo marinus) and frogs (Rana pipiens pipiens) were given intraperitoneal injections of Na36Cl and Na235SO4. After in vivo equilibration for 20--180 min, the animals were pithed, and their ventricular and semitendinosus muscles were excised. Measurements of total Cl (by titrimetry) and 36Cl (by radioassay) showed that specific radioactivities of plasma and mus les approached equality within 1 h after injection for toad skeletal and heart muscle and frog ventricles, indicating complete exchange of cellular Cl with 36Cl. From the simultaneously measured muscle water contents and 35SO4 spaces, intracellular Cl concentrations in vivo (in mumol/g cell water) for semitendinosus and ventricular muscles were calculated to be, respectively, 1.4 +/- 0.3 and 2.3 +/- 0.8 for Bufo and 1.7 +/- 0.7 and 4.8 +/- 2.4 for Rana. In view of these low values, active cellular Cl accumulation seems improbable, but cannot be rigorously excluded without simultaneous membrane potential and intracellular ion activity measurements. A high concentration of Cl in the sarcoplasmic reticulum of skeletal muscle is also inconsistent with these measurements.</offset>
-    <text>Toads (Bufo marinus) and frogs (Rana pipiens pipiens) were given intraperitoneal injections of Na36Cl and Na235SO4. After in vivo equilibration for 20--180 min, the animals were pithed, and their ventricular and semitendinosus muscles were excised. Measurements of total Cl (by titrimetry) and 36Cl (by radioassay) showed that specific radioactivities of plasma and mus les approached equality within 1 h after injection for toad skeletal and heart muscle and frog ventricles, indicating complete exchange of cellular Cl with 36Cl. From the simultaneously measured muscle water contents and 35SO4 spaces, intracellular Cl concentrations in vivo (in mumol/g cell water) for semitendinosus and ventricular muscles were calculated to be, respectively, 1.4 +/- 0.3 and 2.3 +/- 0.8 for Bufo and 1.7 +/- 0.7 and 4.8 +/- 2.4 for Rana. In view of these low values, active cellular Cl accumulation seems improbable, but cannot be rigorously excluded without simultaneous membrane potential and intracellular ion activity measurements. A high concentration of Cl in the sarcoplasmic reticulum of skeletal muscle is also inconsistent with these measurements.</text>
-    <annotation id="0">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="1128" length="2"/>
-      <text>Cl</text>
-    </annotation>
-    <annotation id="1">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="173" length="6"/>
-      <text>Na36Cl</text>
-    </annotation>
-    <annotation id="2">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="184" length="8"/>
-      <text>Na235SO4</text>
-    </annotation>
-    <annotation id="3">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="349" length="2"/>
-      <text>Cl</text>
-    </annotation>
-    <annotation id="4">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="596" length="2"/>
-      <text>Cl</text>
-    </annotation>
-    <annotation id="5">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="697" length="2"/>
-      <text>Cl</text>
-    </annotation>
-    <annotation id="6">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="9" length="2"/>
-      <text>Cl</text>
-    </annotation>
-    <annotation id="7">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="951" length="2"/>
-      <text>Cl</text>
     </annotation>
   </passage>
 </document>
@@ -476,219 +415,87 @@
   </passage>
 </document>
 <document>
-  <id>100018</id>
+  <id>27075942</id>
   <passage>
     <infon key="type">title</infon>
     <offset>0</offset>
-    <text>Tetracycline-induced inhibition of Na+ transport in the toad urinary bladder.</text>
+    <text>Beh  et's disease: A comprehensive review with a focus on epidemiology, etiology and clinical features, and management of mucocutaneous lesions.</text>
   </passage>
   <passage>
     <infon key="type">abstract</infon>
-    <offset>The effects of three tetracyclines, demethylchlortetracycline (DMC), minocycline (MNC), and oxytetracycline (OTC), on Na+ transport (measured as short-circuit current) were examined in toad urinary bladders mounted in modified Ussing chambers. During a 1-h incubation period serosal DMC (but not MNC or OTC) inhibited basal Na+ transport, whereas MNC (but not DMC or OTC) inhibited ADH-stimulated Na+ transport. MNC also inhibited cyclic AMP-stimulated Na+ transport. During longer incubation periods all three drugs inhibited basal Na+ transport. The DMC-induced inhibition of basal Na+ transport and the MNC-induced inhibition of ADH-stimulated Na+ transport were paralleled by an inhibition of the active conductance of the bladders. Thus, although all three drugs inhibit basal Na+ transport, only MNC inhibits ADH-stimulated Na+ transport. This effect does not correlate with the known effects of the tetracyclines on ADH-stimulated water flow or with drug-protein binding, and may be related to the greater lipid solubility of MNC.</offset>
-    <text>The effects of three tetracyclines, demethylchlortetracycline (DMC), minocycline (MNC), and oxytetracycline (OTC), on Na+ transport (measured as short-circuit current) were examined in toad urinary bladders mounted in modified Ussing chambers. During a 1-h incubation period serosal DMC (but not MNC or OTC) inhibited basal Na+ transport, whereas MNC (but not DMC or OTC) inhibited ADH-stimulated Na+ transport. MNC also inhibited cyclic AMP-stimulated Na+ transport. During longer incubation periods all three drugs inhibited basal Na+ transport. The DMC-induced inhibition of basal Na+ transport and the MNC-induced inhibition of ADH-stimulated Na+ transport were paralleled by an inhibition of the active conductance of the bladders. Thus, although all three drugs inhibit basal Na+ transport, only MNC inhibits ADH-stimulated Na+ transport. This effect does not correlate with the known effects of the tetracyclines on ADH-stimulated water flow or with drug-protein binding, and may be related to the greater lipid solubility of MNC.</text>
+    <offset>UNASSIGNED: Beh  et's disease (BD) is a chronic, relapsing, inflammatory multisystem disease of unknown etiology. Oral ulcers, genital ulcers, cutaneous lesions, and ocular and articular involvement are the most frequent features of the disease. Mucocutaneous lesions are considered hallmarks of the disease, and often precede other manifestations. Therefore, their recognition may permit earlier diagnosis and treatment with beneficial results for prognosis. BD is particularly prevalent in "Silk Route" populations but has a global distribution. The disease usually starts around the third or fourth decade of life. Sex distribution is roughly equal. The diagnosis is based on clinical criteria, as there is no pathognomonic test. Genetic factors have been investigated extensively, and association with human leukocyte antigen (HLA)-B51 is still known as the strongest genetic susceptibility factor. The T-helper 17 and interleukin (IL)-17 pathways are active, and play an important role, particularly in acute attacks of BD. Neutrophil activity is increased in BD, and the affected organs show a significant neutrophil and lymphocyte infiltration. HLA-B51 association and increased IL-17 response are thought to play a role in neutrophil activation. Treatment is mainly based on the suppression of inflammatory attacks of the disease using immunomodulatory and immunosuppressive agents. Although treatment has become much more effective in recent years with the introduction of newer drugs, BD is still associated with considerable morbidity and increased mortality. Male sex, younger age of onset and increased number of organs involved at the diagnosis are associated with a more severe disease and, therefore, require more aggressive treatment.</offset>
+    <text>UNASSIGNED: Beh  et's disease (BD) is a chronic, relapsing, inflammatory multisystem disease of unknown etiology. Oral ulcers, genital ulcers, cutaneous lesions, and ocular and articular involvement are the most frequent features of the disease. Mucocutaneous lesions are considered hallmarks of the disease, and often precede other manifestations. Therefore, their recognition may permit earlier diagnosis and treatment with beneficial results for prognosis. BD is particularly prevalent in "Silk Route" populations but has a global distribution. The disease usually starts around the third or fourth decade of life. Sex distribution is roughly equal. The diagnosis is based on clinical criteria, as there is no pathognomonic test. Genetic factors have been investigated extensively, and association with human leukocyte antigen (HLA)-B51 is still known as the strongest genetic susceptibility factor. The T-helper 17 and interleukin (IL)-17 pathways are active, and play an important role, particularly in acute attacks of BD. Neutrophil activity is increased in BD, and the affected organs show a significant neutrophil and lymphocyte infiltration. HLA-B51 association and increased IL-17 response are thought to play a role in neutrophil activation. Treatment is mainly based on the suppression of inflammatory attacks of the disease using immunomodulatory and immunosuppressive agents. Although treatment has become much more effective in recent years with the introduction of newer drugs, BD is still associated with considerable morbidity and increased mortality. Male sex, younger age of onset and increased number of organs involved at the diagnosis are associated with a more severe disease and, therefore, require more aggressive treatment.</text>
     <annotation id="0">
-      <infon key="MESH">D013752</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="0" length="12"/>
-      <text>Tetracycline</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="0" length="17"/>
+      <text>Beh  et's disease</text>
     </annotation>
     <annotation id="1">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="1111" length="3"/>
-      <text>MNC</text>
+      <infon key="NCBI Gene">3605</infon>
+      <infon key="type">Gene</infon>
+      <location offset="1068" length="19"/>
+      <text>interleukin (IL)-17</text>
     </annotation>
     <annotation id="2">
-      <infon key="MESH">D003707</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="114" length="25"/>
-      <text>demethylchlortetracycline</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="1170" length="2"/>
+      <text>BD</text>
     </annotation>
     <annotation id="3">
-      <infon key="MESH">C004944</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="141" length="3"/>
-      <text>DMC</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="1210" length="2"/>
+      <text>BD</text>
     </annotation>
     <annotation id="4">
-      <infon key="MESH">D008911</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="147" length="11"/>
-      <text>minocycline</text>
+      <infon key="MESH">D001927</infon>
+      <infon key="type">Disease</infon>
+      <location offset="122" length="21"/>
+      <text>mucocutaneous lesions</text>
     </annotation>
     <annotation id="5">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="160" length="3"/>
-      <text>MNC</text>
+      <infon key="NCBI Gene">3605</infon>
+      <infon key="type">Gene</infon>
+      <location offset="1331" length="5"/>
+      <text>IL-17</text>
     </annotation>
     <annotation id="6">
-      <infon key="MESH">D010118</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="170" length="15"/>
-      <text>oxytetracycline</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="157" length="17"/>
+      <text>Beh  et's disease</text>
     </annotation>
     <annotation id="7">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="187" length="3"/>
-      <text>OTC</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="1640" length="2"/>
+      <text>BD</text>
     </annotation>
     <annotation id="8">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="196" length="3"/>
-      <text>Na+</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="176" length="2"/>
+      <text>BD</text>
     </annotation>
     <annotation id="9">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="35" length="2"/>
-      <text>Na</text>
+      <infon key="MESH">D014456</infon>
+      <infon key="type">Disease</infon>
+      <location offset="259" length="27"/>
+      <text>Oral ulcers, genital ulcers</text>
     </annotation>
     <annotation id="10">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="35" length="3"/>
-      <text>Na+</text>
+      <infon key="MESH">D000544</infon>
+      <infon key="type">Disease</infon>
+      <location offset="605" length="2"/>
+      <text>BD</text>
     </annotation>
     <annotation id="11">
-      <infon key="MESH">C004944</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="361" length="3"/>
-      <text>DMC</text>
-    </annotation>
-    <annotation id="12">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="374" length="3"/>
-      <text>MNC</text>
-    </annotation>
-    <annotation id="13">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="381" length="3"/>
-      <text>OTC</text>
-    </annotation>
-    <annotation id="14">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="402" length="2"/>
-      <text>Na</text>
-    </annotation>
-    <annotation id="15">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="402" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="16">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="425" length="3"/>
-      <text>MNC</text>
-    </annotation>
-    <annotation id="17">
-      <infon key="MESH">C004944</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="438" length="3"/>
-      <text>DMC</text>
-    </annotation>
-    <annotation id="18">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="445" length="3"/>
-      <text>OTC</text>
-    </annotation>
-    <annotation id="19">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="475" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="20">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="490" length="3"/>
-      <text>MNC</text>
-    </annotation>
-    <annotation id="21">
-      <infon key="MESH">D000242</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="509" length="10"/>
-      <text>cyclic AMP</text>
-    </annotation>
-    <annotation id="22">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="531" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="23">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="611" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="24">
-      <infon key="MESH">C004944</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="630" length="3"/>
-      <text>DMC</text>
-    </annotation>
-    <annotation id="25">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="662" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="26">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="662" length="2"/>
-      <text>Na</text>
-    </annotation>
-    <annotation id="27">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="684" length="3"/>
-      <text>MNC</text>
-    </annotation>
-    <annotation id="28">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="725" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="29">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="860" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="30">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="880" length="3"/>
-      <text>MNC</text>
-    </annotation>
-    <annotation id="31">
-      <infon key="MESH">Unknown</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="908" length="3"/>
-      <text>Na+</text>
-    </annotation>
-    <annotation id="32">
-      <infon key="MESH">D013754</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="984" length="13"/>
-      <text>tetracyclines</text>
-    </annotation>
-    <annotation id="33">
-      <infon key="MESH">D013754</infon>
-      <infon key="type">Chemical</infon>
-      <location offset="99" length="13"/>
-      <text>tetracyclines</text>
+      <infon key="NCBI Gene">3126</infon>
+      <infon key="type">Gene</infon>
+      <location offset="957" length="27"/>
+      <text>leukocyte antigen (HLA)-B51</text>
     </annotation>
   </passage>
 </document>
