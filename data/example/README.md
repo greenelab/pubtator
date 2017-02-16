@@ -15,5 +15,5 @@ python ../../scripts/extract_tags.py --input 2-sample-docs.xml --output 3-sample
 
 To generate the python shelf files use the following command:
 ```
-python ../../scripts/shevle_tags.py --input 3-sample-tags.tsv --output 4-sample-shelve
+python ../../scripts/shelve_tags.py --input 3-sample-tags.tsv --output 4-sample-shelve
 ```
