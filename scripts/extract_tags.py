@@ -20,7 +20,7 @@ def extract_annotations(xml_file, output_file):
     output_file -- the path to output the formatted data
     """
     opener = utilities.get_opener(output_file)
-    with opener(output_file, "w") as csvfile:
+    with opener(output_file, "wt") as csvfile:
         fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()

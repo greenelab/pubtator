@@ -3,8 +3,8 @@ import importlib
 
 encoding_to_module = {
     'gzip': 'gzip',
-    # 'bzip2': 'bz2', # Enable in Python 3
-    # 'xz': 'lzma', # Enable in Python 3
+    'bzip2': 'bz2',
+    'xz': 'lzma',
 }
 
 def get_opener(filename):

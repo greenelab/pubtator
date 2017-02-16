@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 import argparse
 import csv
 import time
@@ -88,7 +87,6 @@ def pubtator_stanza_to_article(file_lines):
 
     # title
     title_heading = file_lines[0].split('|')
-    title_len = len(title_heading[2])
     article["Document ID"] = title_heading[0]
     article["Title"] = title_heading[2]
     title_len = len(title_heading[2])
@@ -97,10 +95,14 @@ def pubtator_stanza_to_article(file_lines):
     article["Abstract"] = abstract_heading[2]
 
     # set up the csv reader
-    annts = csv.DictReader(file_lines[2:], fieldnames=['Document', 'Start', 'End', 'Term', 'Type', 'ID'], delimiter=str("\t"))
-    sorted_annts = sorted(annts, key=lambda x: x["Start"])
-    article["Title_Annot"] = filter(lambda x: x["Start"] < title_len, sorted_annts)
-    article["Abstract_Annot"] = filter(lambda x: x["Start"] > title_len, sorted_annts)
+    annts = csv.DictReader(file_lines[2:], fieldnames=['Document', 'Start', 'End', 'Term', 'Type', 'ID'], delimiter="\t")
+    annts = list(annts)
+    for annt in annts:
+        for key in 'Start', 'End':
+            annt[key] = int(annt[key])
+    annts.sort(key=lambda x: x["Start"])
+    article["Title_Annot"] = filter(lambda x: x["Start"] < title_len, annts)
+    article["Abstract_Annot"] = filter(lambda x: x["Start"] > title_len, annts)
 
     return article
 
@@ -116,7 +118,7 @@ def bioconcepts2pubtator_offsets(input_file):
     """
     file_lines = list()
     opener = utilities.get_opener(input_file)
-    f = opener(input_file, "rb")
+    f = opener(input_file, "rt")
 
     for line in f:
         # Convert "illegal chracters" (i.e. < > &) in the main text
@@ -161,7 +163,7 @@ def convert_pubtator(input_file, output_file=None):
         # Have to manually do this because hangs otherwise
         # Write the head of the xml file
         xml_header = writer.tostring('UTF-8')
-        xml_tail = '</collection>\n'
+        xml_tail = b'</collection>\n'
         xml_head = xml_header[:-len(xml_tail)]
         g.write(xml_head)
 
@@ -178,7 +180,7 @@ def convert_pubtator(input_file, output_file=None):
 
             abstract_passage = BioCPassage()
             abstract_passage.put_infon('type', 'abstract')
-            abstract_passage.offset = str(article["Abstract"])
+            abstract_passage.offset = article["Abstract"]
             abstract_passage.text = article["Abstract"]
 
             id_index = 0
