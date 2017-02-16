@@ -27,38 +27,40 @@ def bioconcepts2pubtator_annotations(tag, index):
 
     # If the annotation type is a Gene,Species, Mutation, SNP
     # Write out relevant tag
-    if tag["type"] == "Gene":
-        annt.infons["NCBI Gene"] = tag["tag_id"]
+    tag_type = tag['type'] or ''
+    tag_id = tag['tag_id']
+    if tag_type == "Gene":
+        annt.infons["NCBI Gene"] = tag_id
 
-    elif tag["type"] == "Species":
-        annt.infons["NCBI Species"] = tag["tag_id"]
+    elif tag_type == "Species":
+        annt.infons["NCBI Species"] = tag_id
 
-    elif "Mutation" in tag["type"]:
-        annt.infons["tmVar"] = tag["tag_id"]
+    elif "Mutation" in tag_type:
+        annt.infons["tmVar"] = tag_id
 
-    elif "SNP" in tag["type"]:
-        annt.infons["tmVar"] = tag["tag_id"]
+    elif "SNP" in tag_type:
+        annt.infons["tmVar"] = tag_id
 
     else:
         # If there is no MESH ID for an annotation
-        if tag["tag_id"]:
+        if tag_id:
             # check to see if there are multiple mesh tags
-            if "|" in tag["tag_id"]:
+            if "|" in tag_id:
                 # Write out each MESH id as own tag
-                for tag_num, ids in enumerate(tag["tag_id"].split("|")):
+                for tag_num, ids in enumerate(tag_id.split("|")):
                     # Some ids dont have the MESH:#### form so added case to that
                     if ":" not in ids:
-                        annt.infons["MESH {}".format(tag_num)] = tag["tag_id"]
+                        annt.infons["MESH {}".format(tag_num)] = tag_id
                     else:
                         term_type, term_id = ids.split(":")
                         annt.infons["{} {}".format(term_type, tag_num)] = term_id
             else:
                 # Some ids dont have the MESH:#### form so added case to that
-                if ":" in tag["tag_id"]:
-                    term_type, term_id = tag["tag_id"].split(":")
+                if ":" in tag_id:
+                    term_type, term_id = tag_id.split(":")
                     annt.infons[term_type] = term_id
                 else:
-                    annt.infons["MESH"] = tag["tag_id"]
+                    annt.infons["MESH"] = tag_id
         else:
             annt.infons["MESH"] = "Unknown"
 
