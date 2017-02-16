@@ -1,0 +1,15 @@
+--2017-02-16 18:49:50--  ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/bioconcepts2pubtator_offsets.gz
+           => ‘download/.listing’
+Resolving ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)... 2607:f220:41e:250::12, 130.14.250.12
+Connecting to ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)|2607:f220:41e:250::12|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /pub/lu/PubTator ... done.
+==> EPSV ... done.    ==> LIST ... done.
+
+     0K .                                                      27.0K=0.05s
+
+2017-02-16 18:49:51 (27.0 KB/s) - ‘download/.listing’ saved [1275]
+
+Removed ‘download/.listing’.
+Remote file no newer than local file ‘download/bioconcepts2pubtator_offsets.gz’ -- not retrieving.
