@@ -7,7 +7,8 @@ import tqdm
 import utilities
 
 def extract_annotations(xml_path, tsv_path):
-    """ Extract the annotations from pubtator xml formatted file
+    """
+    Extract the annotations from pubtator xml formatted file
     Outputs a TSV file with the following header terms:
     Document - the corresponding pubmed id
     Type - the type of term (i.e. Chemical, Disease, Gene etc.)
@@ -53,11 +54,10 @@ def extract_annotations(xml_path, tsv_path):
             document.clear()
 
 
-# Main
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Extracts the annotations from the BioC xml format')
-    parser.add_argument("--input", help="File path pointing to input file.", type=str, required=True)
-    parser.add_argument("--output", nargs="?", help="File path for destination of output.", required=True)
+    parser = argparse.ArgumentParser(description='Export tags in a BioC XML file to a TSV table')
+    parser.add_argument("--input", help="Path for the input BioC XML file", type=str, required=True)
+    parser.add_argument("--output", nargs="?", help="Path for the output TSV file", required=True)
 
     args = parser.parse_args()
 
