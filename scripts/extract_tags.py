@@ -4,6 +4,7 @@ import csv
 from lxml import etree as ET
 import tqdm
 
+import utilities
 
 def extract_annotations(xml_file, output_file):
     """ Extract the annotations from pubtator xml formatted file
@@ -18,7 +19,8 @@ def extract_annotations(xml_file, output_file):
     xml_file -- The path to the xml data file
     output_file -- the path to output the formatted data
     """
-    with open(output_file, "w") as csvfile:
+    opener = utilities.get_opener(output_file)
+    with opener(output_file, "w") as csvfile:
         fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()

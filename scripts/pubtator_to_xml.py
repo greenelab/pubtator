@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import argparse
-import gzip
 import csv
 import time
 
@@ -9,6 +8,8 @@ from bioc import BioCAnnotation, BioCLocation
 from lxml.builder import E
 from lxml.etree import tostring
 import tqdm
+
+import utilities
 
 
 def bioconcepts2pubtator_annotations(tag, index):
@@ -114,10 +115,8 @@ def bioconcepts2pubtator_offsets(input_file):
     input_file - the name of the bioconcepts2putator_offset file (obtained from pubtator's ftp site: ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/)
     """
     file_lines = list()
-    if ".gz" in input_file:
-        f = gzip.open(input_file, "rb")
-    else:
-        f = open(input_file, "rb")
+    opener = utilities.get_opener(input_file)
+    f = opener(input_file, "rb")
 
     for line in f:
         # Convert "illegal chracters" (i.e. < > &) in the main text
@@ -155,8 +154,9 @@ def convert_pubtator(input_file, output_file=None):
     collection.date = time.strftime("%Y/%m/%d")
     collection.source = "Pubtator"
     collection.key = "Pubtator.key"
-
-    with open(output_file, 'wb') as g:
+    
+    opener = utilities.get_opener(output_file)
+    with opener(output_file, 'wb') as g:
 
         # Have to manually do this because hangs otherwise
         # Write the head of the xml file
