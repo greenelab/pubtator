@@ -160,10 +160,10 @@ def convert_pubtator(input_path, output_path):
 
         # Have to manually do this because hangs otherwise
         # Write the head of the xml file
-        xml_header = writer.tostring('UTF-8')
-        xml_tail = b'</collection>\n'
-        xml_head = xml_header[:-len(xml_tail)]
-        xml_file.write(xml_head)
+        xml_shell = writer.tostring('UTF-8')
+        *xml_head, xml_tail = xml_shell.rstrip().split(b'\n')
+        for line in xml_head:
+            xml_file.write(line + b'\n')
 
         article_generator = read_bioconcepts2pubtator_offsets(input_path)
         # Write each article in BioC format
@@ -199,7 +199,7 @@ def convert_pubtator(input_path, output_path):
             step_parent.clear()
 
         # Write the closing tag of the xml document
-        xml_file.write(xml_tail)
+        xml_file.write(xml_tail + b'\n')
 
 
 if __name__ == '__main__':
