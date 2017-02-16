@@ -1,5 +1,7 @@
 # PubTator: tagged PubMed abstracts for literature mining
 
+[![Build Status](https://travis-ci.org/greenelab/pubtator.svg?branch=master)](https://travis-ci.org/greenelab/pubtator)
+
 [PubTator](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTator/) uses text mining to tag PubMed abstracts with standardized concepts. This repository retrieves and processes PubTator annotations for use in [`greenelab/snorkeling`](https://github.com/greenelab/snorkeling) and elsewhere.
 
 ## Environment
