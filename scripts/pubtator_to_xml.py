@@ -138,15 +138,13 @@ def bioconcepts2pubtator_offsets(input_file):
     f.close()
 
 
-def convert_pubtator(input_file, output_file=None):
+def convert_pubtator(input_file, output_file):
     """Convert pubtators annotation list to BioC XML
 
     Keyword Arguments:
     input_file -- the path of pubtators annotation file
     output_file -- the path to output the converted text
     """
-    if output_file is None:
-        output_file = "bioc-converted-docs.xml"
 
     # Set up BioCWriter to write specifically Pubtator
     # Can change to incorporate other sources besides pubtator
