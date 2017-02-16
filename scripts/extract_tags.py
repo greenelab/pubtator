@@ -6,7 +6,7 @@ import tqdm
 
 import utilities
 
-def extract_annotations(xml_file, output_file):
+def extract_annotations(xml_path, tsv_path):
     """ Extract the annotations from pubtator xml formatted file
     Outputs a TSV file with the following header terms:
     Document - the corresponding pubmed id
@@ -16,13 +16,14 @@ def extract_annotations(xml_file, output_file):
     End - the character position where the term ends
 
     Keywords arguments:
-    xml_file -- The path to the xml data file
-    output_file -- the path to output the formatted data
+    xml_path -- The path to the xml data file
+    tsv_path -- the path to output the formatted data
     """
-    opener = utilities.get_opener(output_file)
-    with opener(output_file, "wt") as csvfile:
+    xml_opener = utilities.get_opener(xml_path)
+    csv_opener = utilities.get_opener(tsv_path)
+    with xml_opener(xml_path, "rb") as xml_file, csv_opener(tsv_path, "wt") as tsv_file:
         fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t')
+        writer = csv.DictWriter(tsv_file, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
         tag_generator = ET.iterparse(xml_file, tag="document")
 
@@ -60,4 +61,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    extract_annotations(args.input, args.output)
+    extract_annotations(xml_path=args.input, tsv_path=args.output)
