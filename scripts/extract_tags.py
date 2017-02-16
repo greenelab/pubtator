@@ -1,6 +1,5 @@
 import argparse
 import csv
-import sys
 
 from lxml import etree as ET
 import tqdm

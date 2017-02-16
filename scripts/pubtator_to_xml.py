@@ -1,10 +1,8 @@
 from __future__ import unicode_literals
 import argparse
 import gzip
-import cgi
 import csv
 import time
-import sys
 
 from bioc import BioCWriter, BioCCollection, BioCDocument, BioCPassage
 from bioc import BioCAnnotation, BioCLocation
