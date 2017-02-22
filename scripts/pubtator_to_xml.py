@@ -1,16 +1,14 @@
-from __future__ import unicode_literals
 import argparse
-import gzip
-import cgi
 import csv
 import time
-import sys
 
 from bioc import BioCWriter, BioCCollection, BioCDocument, BioCPassage
 from bioc import BioCAnnotation, BioCLocation
 from lxml.builder import E
 from lxml.etree import tostring
 import tqdm
+
+import utilities
 
 
 def bioconcepts2pubtator_annotations(tag, index):
@@ -25,129 +23,130 @@ def bioconcepts2pubtator_annotations(tag, index):
 
     annt = BioCAnnotation()
     annt.id = str(index)
-    annt.infons["type"] = tag["Type"]
+    annt.infons["type"] = tag["type"]
 
     # If the annotation type is a Gene,Species, Mutation, SNP
     # Write out relevant tag
-    if tag["Type"] == "Gene":
-        annt.infons["NCBI Gene"] = tag["ID"]
+    tag_type = tag['type'] or ''
+    tag_id = tag['tag_id']
+    if tag_type == "Gene":
+        annt.infons["NCBI Gene"] = tag_id
 
-    elif tag["Type"] == "Species":
-        annt.infons["NCBI Species"] = tag["ID"]
+    elif tag_type == "Species":
+        annt.infons["NCBI Species"] = tag_id
 
-    elif "Mutation" in tag["Type"]:
-        annt.infons["tmVar"] = tag["ID"]
+    elif "Mutation" in tag_type:
+        annt.infons["tmVar"] = tag_id
 
-    elif "SNP" in tag["Type"]:
-        annt.infons["tmVar"] = tag["ID"]
+    elif "SNP" in tag_type:
+        annt.infons["tmVar"] = tag_id
 
     else:
         # If there is no MESH ID for an annotation
-        if tag["ID"]:
+        if tag_id:
             # check to see if there are multiple mesh tags
-            if "|" in tag["ID"]:
+            if "|" in tag_id:
                 # Write out each MESH id as own tag
-                for tag_num, ids in enumerate(tag["ID"].split("|")):
+                for tag_num, ids in enumerate(tag_id.split("|")):
                     # Some ids dont have the MESH:#### form so added case to that
                     if ":" not in ids:
-                        annt.infons["MESH {}".format(tag_num)] = tag["ID"]
+                        annt.infons["MESH {}".format(tag_num)] = tag_id
                     else:
                         term_type, term_id = ids.split(":")
                         annt.infons["{} {}".format(term_type, tag_num)] = term_id
             else:
                 # Some ids dont have the MESH:#### form so added case to that
-                if ":" in tag["ID"]:
-                    term_type, term_id = tag["ID"].split(":")
+                if ":" in tag_id:
+                    term_type, term_id = tag_id.split(":")
                     annt.infons[term_type] = term_id
                 else:
-                    annt.infons["MESH"] = tag["ID"]
+                    annt.infons["MESH"] = tag_id
         else:
             annt.infons["MESH"] = "Unknown"
 
     location = BioCLocation()
-    location.offset = str(tag["Start"])
-    location.length = str(len(tag["Term"]))
+    location.offset = str(tag["start"])
+    location.length = str(len(tag["term"]))
     annt.locations.append(location)
-    annt.text = tag["Term"]
+    annt.text = tag["term"]
     return annt
 
 
-def pubtator_stanza_to_article(file_lines):
+def pubtator_stanza_to_article(lines):
     """Article Generator
 
     Returns an article that is a dictionary with the following keywords:
-    Document ID - a document identifier
+    pubmed_id - a document identifier
     Title- the title string
     Abstract-  the abstract string
     Title_Annot- A filtered list of tags specific to the title
     Abstract_Annot- A filtered list of tags specific to the abstract
 
     Keywords:
-    file_lines - this is a list of file lines passed from bioconcepts2pubtator_offsets function
+    lines - this is a list of file lines passed from bioconcepts2pubtator_offsets function
     """
     article = {}
 
     # title
-    title_heading = file_lines[0].split('|')
-    title_len = len(title_heading[2])
-    article["Document ID"] = title_heading[0]
-    article["Title"] = title_heading[2]
+    title_heading = lines[0].split('|')
+    article["pubmed_id"] = title_heading[0]
+    article["title"] = title_heading[2]
     title_len = len(title_heading[2])
     # abstract
-    abstract_heading = file_lines[1].split("|")
-    article["Abstract"] = abstract_heading[2]
+    abstract_heading = lines[1].split("|")
+    article["abstract"] = abstract_heading[2]
 
     # set up the csv reader
-    annts = csv.DictReader(file_lines[2:], fieldnames=['Document', 'Start', 'End', 'Term', 'Type', 'ID'], delimiter=str("\t"))
-    sorted_annts = sorted(annts, key=lambda x: x["Start"])
-    article["Title_Annot"] = filter(lambda x: x["Start"] < title_len, sorted_annts)
-    article["Abstract_Annot"] = filter(lambda x: x["Start"] > title_len, sorted_annts)
+    annts = csv.DictReader(lines[2:], fieldnames=['pubmed_id', 'start', 'end', 'term', 'type', 'tag_id'], delimiter="\t")
+    annts = list(annts)
+    for annt in annts:
+        for key in 'start', 'end':
+            annt[key] = int(annt[key])
+    annts.sort(key=lambda x: x["start"])
+    article["title_annot"] = filter(lambda x: x["start"] < title_len, annts)
+    article["abstract_annot"] = filter(lambda x: x["start"] > title_len, annts)
 
     return article
 
 
-def bioconcepts2pubtator_offsets(input_file):
+def read_bioconcepts2pubtator_offsets(path):
     """Bioconcepts to pubtator
 
     Yields an article that is a dictionary described in the article generator
     function.
 
     Keywords:
-    input_file - the name of the bioconcepts2putator_offset file (obtained from pubtator's ftp site: ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/)
+    path - the path to the bioconcepts2putator_offset file (obtained from pubtator's ftp site: ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/)
     """
-    file_lines = list()
-    if ".gz" in input_file:
-        f = gzip.open(input_file, "rb")
-    else:
-        f = open(input_file, "rb")
+    lines = list()
+    opener = utilities.get_opener(path)
+    f = opener(path, "rt")
 
     for line in f:
         # Convert "illegal chracters" (i.e. < > &) in the main text
         # into html entities
         line = line.rstrip()
         if line:
-            file_lines.append(line)
+            lines.append(line)
         else:
-            yield pubtator_stanza_to_article(file_lines)
-            file_lines = list()
+            yield pubtator_stanza_to_article(lines)
+            lines = list()
 
     # we missed a document because the file didn't
     # end in a new line
-    if len(file_lines) > 0:
-        yield pubtator_stanza_to_article(file_lines)
+    if len(lines) > 0:
+        yield pubtator_stanza_to_article(lines)
 
     f.close()
 
 
-def convert_pubtator(input_file, output_file=None):
+def convert_pubtator(input_path, output_path):
     """Convert pubtators annotation list to BioC XML
 
     Keyword Arguments:
     input_file -- the path of pubtators annotation file
-    output_file -- the path to output the converted text
+    output_file -- the path to output the BioC XML file
     """
-    if output_file is None:
-        output_file = "bioc-converted-docs.xml"
 
     # Set up BioCWriter to write specifically Pubtator
     # Can change to incorporate other sources besides pubtator
@@ -157,38 +156,39 @@ def convert_pubtator(input_file, output_file=None):
     collection.date = time.strftime("%Y/%m/%d")
     collection.source = "Pubtator"
     collection.key = "Pubtator.key"
-
-    with open(output_file, 'wb') as g:
+    
+    opener = utilities.get_opener(output_path)
+    with opener(output_path, 'wb') as xml_file:
 
         # Have to manually do this because hangs otherwise
         # Write the head of the xml file
-        xml_header = writer.tostring('UTF-8')
-        xml_tail = '</collection>\n'
-        xml_head = xml_header[:-len(xml_tail)]
-        g.write(xml_head)
+        xml_shell = writer.tostring('UTF-8')
+        *xml_head, xml_tail = xml_shell.rstrip().split(b'\n')
+        for line in xml_head:
+            xml_file.write(line + b'\n')
 
-        article_generator = bioconcepts2pubtator_offsets(input_file)
+        article_generator = read_bioconcepts2pubtator_offsets(input_path)
         # Write each article in BioC format
         for article in tqdm.tqdm(article_generator):
             document = BioCDocument()
-            document.id = article["Document ID"]
+            document.id = article["pubmed_id"]
 
             title_passage = BioCPassage()
             title_passage.put_infon('type', 'title')
             title_passage.offset = '0'
-            title_passage.text = article["Title"]
+            title_passage.text = article["title"]
 
             abstract_passage = BioCPassage()
             abstract_passage.put_infon('type', 'abstract')
-            abstract_passage.offset = str(article["Abstract"])
-            abstract_passage.text = article["Abstract"]
+            abstract_passage.offset = article["abstract"]
+            abstract_passage.text = article["abstract"]
 
             id_index = 0
-            for tag in article["Title_Annot"]:
+            for tag in article["title_annot"]:
                 title_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
                 id_index += 1
 
-            for tag in article["Abstract_Annot"]:
+            for tag in article["abstract_annot"]:
                 abstract_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
                 id_index += 1
 
@@ -197,17 +197,17 @@ def convert_pubtator(input_file, output_file=None):
 
             step_parent = E('collection')
             writer._build_documents([document], step_parent)
-            g.write(tostring(step_parent[0], pretty_print=True))
+            xml_file.write(tostring(step_parent[0], pretty_print=True))
             step_parent.clear()
 
         # Write the closing tag of the xml document
-        g.write(xml_tail)
+        xml_file.write(xml_tail + b'\n')
 
-# Main
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extracts the annotations from the BioC xml format')
-    parser.add_argument("--documents", help="File path pointing to input file.", required=True)
-    parser.add_argument("--output", help="File path for destination of output.", required=True)
+    parser.add_argument("--documents", help="Path pointing to input file.", required=True)
+    parser.add_argument("--output", help="Path for destination of output.", required=True)
     args = parser.parse_args()
 
     convert_pubtator(args.documents, args.output)

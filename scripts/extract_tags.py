@@ -1,13 +1,14 @@
 import argparse
 import csv
-import sys
 
 from lxml import etree as ET
 import tqdm
 
+import utilities
 
-def extract_annotations(xml_file, output_file):
-    """ Extract the annotations from pubtator xml formatted file
+def extract_annotations(xml_path, tsv_path):
+    """
+    Extract the annotations from pubtator xml formatted file
     Outputs a TSV file with the following header terms:
     Document - the corresponding pubmed id
     Type - the type of term (i.e. Chemical, Disease, Gene etc.)
@@ -16,12 +17,14 @@ def extract_annotations(xml_file, output_file):
     End - the character position where the term ends
 
     Keywords arguments:
-    xml_file -- The path to the xml data file
-    output_file -- the path to output the formatted data
+    xml_path -- The path to the xml data file
+    tsv_path -- the path to output the formatted data
     """
-    with open(output_file, "w") as csvfile:
+    xml_opener = utilities.get_opener(xml_path)
+    csv_opener = utilities.get_opener(tsv_path)
+    with xml_opener(xml_path, "rb") as xml_file, csv_opener(tsv_path, "wt") as tsv_file:
         fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='\t')
+        writer = csv.DictWriter(tsv_file, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
         tag_generator = ET.iterparse(xml_file, tag="document")
 
@@ -51,12 +54,11 @@ def extract_annotations(xml_file, output_file):
             document.clear()
 
 
-# Main
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Extracts the annotations from the BioC xml format')
-    parser.add_argument("--input", help="File path pointing to input file.", type=str, required=True)
-    parser.add_argument("--output", nargs="?", help="File path for destination of output.", required=True)
+    parser = argparse.ArgumentParser(description='Export tags in a BioC XML file to a TSV table')
+    parser.add_argument("--input", help="Path for the input BioC XML file", type=str, required=True)
+    parser.add_argument("--output", nargs="?", help="Path for the output TSV file", required=True)
 
     args = parser.parse_args()
 
-    extract_annotations(args.input, args.output)
+    extract_annotations(xml_path=args.input, tsv_path=args.output)
