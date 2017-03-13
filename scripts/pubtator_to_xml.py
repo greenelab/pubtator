@@ -4,6 +4,7 @@ import time
 
 from bioc import BioCWriter, BioCCollection, BioCDocument, BioCPassage
 from bioc import BioCAnnotation, BioCLocation
+from itertools import groupby
 from lxml.builder import E
 from lxml.etree import tostring
 import tqdm
@@ -126,17 +127,15 @@ def read_bioconcepts2pubtator_offsets(path):
         # Convert "illegal chracters" (i.e. < > &) in the main text
         # into html entities
         line = line.rstrip()
-        if line:
-            lines.append(line)
-        else:
-            yield pubtator_stanza_to_article(lines)
-            lines = list()
-
-    # we missed a document because the file didn't
-    # end in a new line
-    if len(lines) > 0:
-        yield pubtator_stanza_to_article(lines)
-
+        lines.append(line)
+    
+    for k, g in groupby(lines, key=bool):
+        # Group articles based on empty lines as separators. Only pass 
+        # on non-empty lines.
+        g = list(g)
+        if g[0]:
+            yield pubtator_stanza_to_article(g)
+            
     f.close()
 
 
