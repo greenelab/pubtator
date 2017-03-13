@@ -4,6 +4,7 @@ import time
 
 from bioc import BioCWriter, BioCCollection, BioCDocument, BioCPassage
 from bioc import BioCAnnotation, BioCLocation
+from itertools import groupby
 from lxml.builder import E
 from lxml.etree import tostring
 import tqdm
@@ -118,24 +119,17 @@ def read_bioconcepts2pubtator_offsets(path):
     Keywords:
     path - the path to the bioconcepts2putator_offset file (obtained from pubtator's ftp site: ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/)
     """
-    lines = list()
     opener = utilities.get_opener(path)
     f = opener(path, "rt")
 
-    for line in f:
-        # Convert "illegal chracters" (i.e. < > &) in the main text
-        # into html entities
-        line = line.rstrip()
-        if line:
-            lines.append(line)
-        else:
-            yield pubtator_stanza_to_article(lines)
-            lines = list()
+    lines = (line.rstrip() for line in f)
 
-    # we missed a document because the file didn't
-    # end in a new line
-    if len(lines) > 0:
-        yield pubtator_stanza_to_article(lines)
+    for k, g in groupby(lines, key=bool):
+        # Group articles based on empty lines as separators. Only pass
+        # on non-empty lines.
+        g = list(g)
+        if g[0]:
+            yield pubtator_stanza_to_article(g)
 
     f.close()
 
@@ -156,7 +150,7 @@ def convert_pubtator(input_path, output_path):
     collection.date = time.strftime("%Y/%m/%d")
     collection.source = "Pubtator"
     collection.key = "Pubtator.key"
-    
+
     opener = utilities.get_opener(output_path)
     with opener(output_path, 'wb') as xml_file:
 
