@@ -68,6 +68,13 @@ def tag_type_to_correct_labels(tag, tag_type, tag_id, source_label, id_map, annt
     """ This function will assign each tag the appropiate hetnet label given
         some context conditions.
 
+    keyword arguments:
+    tag -- the annotation line that was parsed into an array
+    tag_type -- the type of tag i.e. Chemical, Disease, Species etc
+    tag_id -- the corresponding MeSH id or db's id
+    source_label -- the hetnet labeler string
+    id_map -- the dictionary mapper that pprovides the mapping resource
+    annt -- the annotation object that will be modified
     """
 
     # If there is no MESH ID for an annotation
