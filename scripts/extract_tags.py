@@ -6,6 +6,7 @@ import tqdm
 
 import utilities
 
+
 def extract_annotations(xml_path, tsv_path):
     """
     Extract the annotations from pubtator xml formatted file
