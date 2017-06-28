@@ -14,3 +14,4 @@ python scripts/extract_tags.py \
 python scripts/hetnet_id_extractor.py \
   --input data/example/3-sample-tags.tsv \
   --output data/example/4-hetnet-tags.tsv
+  
