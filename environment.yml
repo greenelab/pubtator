@@ -5,4 +5,4 @@ dependencies:
 - pip:
     - git+https://github.com/en-dash/PyBioC@a21bd181ce3b89de791db4bb7db6ca1c48167648
     - tqdm==4.11.2
-    - pandas=0.20.2
+    - pandas==0.20.2
