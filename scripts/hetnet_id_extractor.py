@@ -16,7 +16,7 @@ def filter_tags(infile, outfile):
 
     # Convert Disease IDs
     disease_merged_df = pd.merge(extracted_tag_df, hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id").drop_duplicates()
-    disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]]
+    disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
 
     # Verify Gene IDs are human genes
     gene_df = extracted_tag_df[extracted_tag_df["type"] == "Gene"]
@@ -35,8 +35,8 @@ def load_disease_df():
     Return a dataframe of id mappings
     """
     url = 'https://raw.githubusercontent.com/dhimmel/disease-ontology/052ffcc960f5897a0575f5feff904ca84b7d2c1d/data/xrefs-prop-slim.tsv'
-    return pd.read_table(url)
-
+    disease_df = pd.read_table(url)
+    return disease_df[disease_df["resource"] == "MSH"]
 
 def load_chemical_df():
     """
@@ -44,6 +44,7 @@ def load_chemical_df():
     Return a dataframe with id mappings
     """
     return pd.read_table("mapper/drugbank_mapper.tsv")
+
 
 def load_gene_df():
     """
