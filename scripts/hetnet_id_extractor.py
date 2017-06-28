@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def filter_tags(infile, outfile):
-    extracted_tag_df = pd.read_csv(infile, sep="\t")
+    extracted_tag_df = pd.read_table(infile)
     hetnet_chemical_df = load_chemical_df()
     hetnet_disease_df = load_disease_df()
     hetnet_gene_df = load_gene_df()
@@ -26,7 +26,7 @@ def filter_tags(infile, outfile):
     final_df = final_df.append(chemical_merged_df)
     final_df = final_df.append(disease_merged_df)
 
-    final_df[["pubmed_id", "type", "identifier", "offset", "end"]].to_csv(args.output, sep="\t", index=False)
+    final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False)
 
 
 def load_disease_df():
@@ -37,6 +37,7 @@ def load_disease_df():
     url = 'https://raw.githubusercontent.com/dhimmel/disease-ontology/052ffcc960f5897a0575f5feff904ca84b7d2c1d/data/xrefs-prop-slim.tsv'
     disease_df = pd.read_table(url)
     return disease_df[disease_df["resource"] == "MSH"]
+
 
 def load_chemical_df():
     """
@@ -52,7 +53,8 @@ def load_gene_df():
     Return a dataframe with the gene ids
     """
     url = 'https://raw.githubusercontent.com/dhimmel/entrez-gene/a7362748a34211e5df6f2d185bb3246279760546/data/genes-human.tsv'
-    return pd.read_table(url).astype({"GeneID": str})
+    gene_df = pd.read_table(url).astype({"GeneID": str})
+    return gene_df[gene_df["type_of_gene"] == "protein-coding"]
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Filter extracted tags to contain Hetnet IDs in a TSV table')
