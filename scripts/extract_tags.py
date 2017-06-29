@@ -6,6 +6,7 @@ import tqdm
 
 import utilities
 
+
 def extract_annotations(xml_path, tsv_path):
     """
     Extract the annotations from pubtator xml formatted file
@@ -23,7 +24,7 @@ def extract_annotations(xml_path, tsv_path):
     xml_opener = utilities.get_opener(xml_path)
     csv_opener = utilities.get_opener(tsv_path)
     with xml_opener(xml_path, "rb") as xml_file, csv_opener(tsv_path, "wt") as tsv_file:
-        fieldnames = ['Document', 'Type', 'ID', 'Offset', 'End']
+        fieldnames = ['pubmed_id', 'type', 'identifier', 'offset', 'end']
         writer = csv.DictWriter(tsv_file, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
         tag_generator = ET.iterparse(xml_file, tag="document")
@@ -47,7 +48,7 @@ def extract_annotations(xml_path, tsv_path):
                 location, = annotation.iter('location')
                 offset = int(location.attrib['offset'])
                 end = offset + int(location.attrib['length'])
-                row = {'Document': pubmed_id, 'Type': ant_type, 'ID': ant_id, 'Offset': offset, 'End': end}
+                row = {'pubmed_id': pubmed_id, 'type': ant_type, 'identifier': ant_id, 'offset': offset, 'end': end}
                 writer.writerow(row)
 
             # prevent memory overload

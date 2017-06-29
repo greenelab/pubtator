@@ -1,5 +1,7 @@
 import argparse
 import csv
+import os
+import re
 import time
 
 from bioc import BioCWriter, BioCCollection, BioCDocument, BioCPassage
@@ -16,7 +18,6 @@ def bioconcepts2pubtator_annotations(tag, index):
     """Bioconcepts to Annotations
     Specifically for bioconcepts2pubtator and converts each annotation
     into an annotation object that BioC can parse.
-
     Keyword Arguments:
     tag -- the annotation line that was parsed into an array
     index -- the id of each document specific annotation
@@ -75,14 +76,12 @@ def bioconcepts2pubtator_annotations(tag, index):
 
 def pubtator_stanza_to_article(lines):
     """Article Generator
-
     Returns an article that is a dictionary with the following keywords:
     pubmed_id - a document identifier
     Title- the title string
     Abstract-  the abstract string
     Title_Annot- A filtered list of tags specific to the title
     Abstract_Annot- A filtered list of tags specific to the abstract
-
     Keywords:
     lines - this is a list of file lines passed from bioconcepts2pubtator_offsets function
     """
@@ -98,7 +97,7 @@ def pubtator_stanza_to_article(lines):
     article["abstract"] = abstract_heading[2]
 
     # set up the csv reader
-    annts = csv.DictReader(lines[2:], fieldnames=['pubmed_id', 'start', 'end', 'term', 'type', 'tag_id'], delimiter="\t")
+    annts = csv.DictReader(lines[2:], fieldnames=['pubmed_id', 'start', 'end', 'term', 'type', 'tag_id'], delimiter="\t", quoting=csv.QUOTE_NONE)
     annts = list(annts)
     for annt in annts:
         for key in 'start', 'end':
@@ -136,7 +135,6 @@ def read_bioconcepts2pubtator_offsets(path):
 
 def convert_pubtator(input_path, output_path):
     """Convert pubtators annotation list to BioC XML
-
     Keyword Arguments:
     input_file -- the path of pubtators annotation file
     output_file -- the path to output the BioC XML file
