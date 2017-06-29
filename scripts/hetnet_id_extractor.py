@@ -10,12 +10,13 @@ def filter_tags(infile, outfile):
     hetnet_gene_df = load_gene_df()
 
     # Covert chemical IDs
-    chemical_merged_df = pd.merge(extracted_tag_df, hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier").drop_duplicates()
+    chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
+    chemical_merged_df = chemical_merged_df.drop_duplicates()
     chemical_merged_df["type"] = "Compound"
-    chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "identifier"]]
+    chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "drugbank_id"]].rename(columns={"drugbank_id": "identifier"})
 
     # Convert Disease IDs
-    disease_merged_df = pd.merge(extracted_tag_df, hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id").drop_duplicates()
+    disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id").drop_duplicates()
     disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
 
     # Verify Gene IDs are human genes
@@ -55,6 +56,7 @@ def load_gene_df():
     url = 'https://raw.githubusercontent.com/dhimmel/entrez-gene/a7362748a34211e5df6f2d185bb3246279760546/data/genes-human.tsv'
     gene_df = pd.read_table(url).astype({"GeneID": str})
     return gene_df[gene_df["type_of_gene"] == "protein-coding"]
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Filter extracted tags to contain Hetnet IDs in a TSV table')
