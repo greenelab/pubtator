@@ -10,12 +10,14 @@ def filter_tags(infile, outfile):
     hetnet_gene_df = load_gene_df()
 
     # Covert chemical IDs
-    chemical_merged_df = pd.merge(extracted_tag_df, hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier").drop_duplicates()
+    chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
+    chemical_merged_df = chemical_merged_df.drop_duplicates()
     chemical_merged_df["type"] = "Compound"
     chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "identifier"]]
 
     # Convert Disease IDs
-    disease_merged_df = pd.merge(extracted_tag_df, hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id").drop_duplicates()
+    disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
+    disease_merged_df = disease_merged_df.drop_duplicates()
     disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
 
     # Verify Gene IDs are human genes
