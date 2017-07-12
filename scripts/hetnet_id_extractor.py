@@ -5,6 +5,15 @@ import tqdm
 
 
 def filter_tags(infile, outfile):
+    """ This method filters pubtator tags to consist of only 
+        hetnet tags
+
+        Keyword arguments:
+        infile -- the name of the file to read
+        outfile -- the name of the output file
+    """
+
+    print_header = True
     for extracted_tag_df in tqdm.tqdm(get_tag_chunks(infile)):
         hetnet_chemical_df = load_chemical_df()
         hetnet_disease_df = load_disease_df()
@@ -14,7 +23,7 @@ def filter_tags(infile, outfile):
         chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
         chemical_merged_df = chemical_merged_df.drop_duplicates()
         chemical_merged_df["type"] = "Compound"
-        chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "identifier"]]
+        chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "drugbank_id"]].rename(columns={"drugbank_id": "identifier"})
 
         # Convert Disease IDs
         disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
@@ -29,10 +38,19 @@ def filter_tags(infile, outfile):
         final_df = final_df.append(chemical_merged_df)
         final_df = final_df.append(disease_merged_df)
 
-        final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False, mode='a')
+        if print_header:
+            final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False, mode='a', compression="xz")
+            print_header = False
+        else:
+            final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False, mode='a', header=False, compression="xz")
 
 
 def get_tag_chunks(filename):
+    """ Chunk the pandas dataframe so not everything is read into memory
+
+        Keyword Arguments:
+        filename -- the file to read through pandas
+    """
     chunksize = 10 ** 6
     for chunk in pd.read_table(filename, chunksize=chunksize):
         yield chunk

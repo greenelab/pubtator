@@ -18,3 +18,8 @@ python scripts/pubtator_to_xml.py \
 python scripts/extract_tags.py \
   --input data/pubtator-docs.xml.xz \
   --output data/pubtator-tags.tsv.xz
+
+# Extract hetnet tags from the pubtator tags
+python scripts/hetnet_id_extractor.py \
+  --input data/pubtator-tags.tsv.xz \
+  --output data/pubtator-hetnet-tags.tsv.xz
