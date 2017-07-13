@@ -3,6 +3,8 @@ import argparse
 import pandas as pd
 import tqdm
 
+import utilities
+
 
 def filter_tags(infile, outfile):
     """ This method filters pubtator tags to consist of only 
@@ -14,35 +16,47 @@ def filter_tags(infile, outfile):
     """
 
     print_header = True
-    for extracted_tag_df in tqdm.tqdm(get_tag_chunks(infile)):
-        hetnet_chemical_df = load_chemical_df()
-        hetnet_disease_df = load_disease_df()
-        hetnet_gene_df = load_gene_df()
+    hetnet_chemical_df = load_chemical_df()
+    hetnet_disease_df = load_disease_df()
+    hetnet_gene_df = load_gene_df()
+    csv_opener = utilities.get_opener(outfile)
 
-        # Covert chemical IDs
-        chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
-        chemical_merged_df = chemical_merged_df.drop_duplicates()
-        chemical_merged_df["type"] = "Compound"
-        chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "drugbank_id"]].rename(columns={"drugbank_id": "identifier"})
+    with csv_opener(outfile, "at") as tsv_file:
+        for extracted_tag_df in tqdm.tqdm(get_tag_chunks(infile)):
 
-        # Convert Disease IDs
-        disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
-        disease_merged_df = disease_merged_df.drop_duplicates()
-        disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
+            # Covert chemical IDs
+            chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
+            chemical_merged_df = chemical_merged_df.drop_duplicates()
+            chemical_merged_df["type"] = "Compound"
+            chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "drugbank_id"]].rename(columns={"drugbank_id": "identifier"})
 
-        # Verify Gene IDs are human genes
-        gene_df = extracted_tag_df[extracted_tag_df["type"] == "Gene"]
-        gene_final_df = gene_df[gene_df["identifier"].isin(hetnet_gene_df["GeneID"])]
+            # Convert Disease IDs
+            disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
+            disease_merged_df = disease_merged_df.drop_duplicates()
+            disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
 
-        final_df = gene_final_df
-        final_df = final_df.append(chemical_merged_df)
-        final_df = final_df.append(disease_merged_df)
+            # Verify Gene IDs are human genes
+            gene_df = extracted_tag_df[extracted_tag_df["type"] == "Gene"]
+            gene_final_df = gene_df[gene_df["identifier"].isin(hetnet_gene_df["GeneID"])]
 
-        if print_header:
-            final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False, mode='a', compression="xz")
-            print_header = False
-        else:
-            final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False, mode='a', header=False, compression="xz")
+            final_df = gene_final_df
+            final_df = final_df.append(chemical_merged_df)
+            final_df = final_df.append(disease_merged_df)
+
+            if print_header:
+                (final_df
+                    [["pubmed_id", "type", "identifier", "offset", "end"]]
+                    .sort_values(["pubmed_id", "offset"])
+                    .to_csv(tsv_file, sep="\t", index=False, mode='at')
+                )
+
+                print_header = False
+            else:
+                (final_df
+                    [["pubmed_id", "type", "identifier", "offset", "end"]]
+                    .sort_values(["pubmed_id", "offset"])
+                    .to_csv(tsv_file, sep="\t", index=False, mode='at', header=False)
+                )
 
 
 def get_tag_chunks(filename):
