@@ -1,34 +1,73 @@
 import argparse
 
 import pandas as pd
+import tqdm
+
+import utilities
 
 
 def filter_tags(infile, outfile):
-    extracted_tag_df = pd.read_table(infile)
+    """ This method filters pubtator tags to consist of only 
+        hetnet tags
+
+        Keyword arguments:
+        infile -- the name of the file to read
+        outfile -- the name of the output file
+    """
+
+    print_header = True
     hetnet_chemical_df = load_chemical_df()
     hetnet_disease_df = load_disease_df()
     hetnet_gene_df = load_gene_df()
+    csv_opener = utilities.get_opener(outfile)
 
-    # Covert chemical IDs
-    chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
-    chemical_merged_df = chemical_merged_df.drop_duplicates()
-    chemical_merged_df["type"] = "Compound"
-    chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "identifier"]]
+    with csv_opener(outfile, "wt") as tsv_file:
+        for extracted_tag_df in tqdm.tqdm(get_tag_chunks(infile)):
 
-    # Convert Disease IDs
-    disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
-    disease_merged_df = disease_merged_df.drop_duplicates()
-    disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
+            # Covert chemical IDs
+            chemical_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Chemical"], hetnet_chemical_df[["drugbank_id", "identifier"]], left_on="identifier", right_on="identifier")
+            chemical_merged_df = chemical_merged_df.drop_duplicates()
+            chemical_merged_df["type"] = "Compound"
+            chemical_merged_df = chemical_merged_df[["pubmed_id", "type", "offset", "end", "drugbank_id"]].rename(columns={"drugbank_id": "identifier"})
 
-    # Verify Gene IDs are human genes
-    gene_df = extracted_tag_df[extracted_tag_df["type"] == "Gene"]
-    gene_final_df = gene_df[gene_df["identifier"].isin(hetnet_gene_df["GeneID"])]
+            # Convert Disease IDs
+            disease_merged_df = pd.merge(extracted_tag_df[extracted_tag_df["type"] == "Disease"], hetnet_disease_df[["doid_code", "resource_id"]], left_on="identifier", right_on="resource_id")
+            disease_merged_df = disease_merged_df.drop_duplicates()
+            disease_merged_df = disease_merged_df[["pubmed_id", "type", "offset", "end", "doid_code"]].rename(columns={"doid_code": "identifier"})
 
-    final_df = gene_final_df
-    final_df = final_df.append(chemical_merged_df)
-    final_df = final_df.append(disease_merged_df)
+            # Verify Gene IDs are human genes
+            gene_df = extracted_tag_df[extracted_tag_df["type"] == "Gene"]
+            gene_final_df = gene_df[gene_df["identifier"].isin(hetnet_gene_df["GeneID"])]
 
-    final_df[["pubmed_id", "type", "identifier", "offset", "end"]].sort_values(["pubmed_id", "offset"]).to_csv(args.output, sep="\t", index=False)
+            final_df = gene_final_df
+            final_df = final_df.append(chemical_merged_df)
+            final_df = final_df.append(disease_merged_df)
+
+            if print_header:
+                (final_df
+                    [["pubmed_id", "type", "identifier", "offset", "end"]]
+                    .sort_values(["pubmed_id", "offset"])
+                    .to_csv(tsv_file, sep="\t", index=False)
+                )
+
+                print_header = False
+            else:
+                (final_df
+                    [["pubmed_id", "type", "identifier", "offset", "end"]]
+                    .sort_values(["pubmed_id", "offset"])
+                    .to_csv(tsv_file, sep="\t", index=False, header=False)
+                )
+
+
+def get_tag_chunks(filename):
+    """ Chunk the pandas dataframe so not everything is read into memory
+
+        Keyword Arguments:
+        filename -- the file to read through pandas
+    """
+    chunksize = 10 ** 6
+    for chunk in pd.read_table(filename, chunksize=chunksize):
+        yield chunk
 
 
 def load_disease_df():
