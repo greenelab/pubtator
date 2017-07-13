@@ -21,7 +21,7 @@ def filter_tags(infile, outfile):
     hetnet_gene_df = load_gene_df()
     csv_opener = utilities.get_opener(outfile)
 
-    with csv_opener(outfile, "at") as tsv_file:
+    with csv_opener(outfile, "wt") as tsv_file:
         for extracted_tag_df in tqdm.tqdm(get_tag_chunks(infile)):
 
             # Covert chemical IDs
@@ -47,7 +47,7 @@ def filter_tags(infile, outfile):
                 (final_df
                     [["pubmed_id", "type", "identifier", "offset", "end"]]
                     .sort_values(["pubmed_id", "offset"])
-                    .to_csv(tsv_file, sep="\t", index=False, mode='at')
+                    .to_csv(tsv_file, sep="\t", index=False)
                 )
 
                 print_header = False
@@ -55,7 +55,7 @@ def filter_tags(infile, outfile):
                 (final_df
                     [["pubmed_id", "type", "identifier", "offset", "end"]]
                     .sort_values(["pubmed_id", "offset"])
-                    .to_csv(tsv_file, sep="\t", index=False, mode='at', header=False)
+                    .to_csv(tsv_file, sep="\t", index=False, header=False)
                 )
 
 
