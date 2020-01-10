@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/greenelab/pubtator.svg?branch=master)](https://travis-ci.org/greenelab/pubtator)
 
-[PubTator](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTator/) uses text mining to tag PubMed abstracts with standardized concepts. This repository retrieves and processes PubTator annotations for use in [`greenelab/snorkeling`](https://github.com/greenelab/snorkeling) and elsewhere.
+[PubTator](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTator/) and its 2.0 version ([PubTator Central](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTatorCentral/)) uses text mining to tag PubMed abstracts/artciles with standardized concepts. This repository retrieves and processes PubTator annotations for use in [`greenelab/snorkeling`](https://github.com/greenelab/snorkeling) and elsewhere.
 
 ## Environment
 
@@ -12,7 +12,17 @@ Install the [conda](https://conda.io) environment specified in [`environment.yml
 conda env create --file environment.yml
 ```
 
-Activate with `source activate pubtator`.
+Activate with `conda activate pubtator`.
+
+## Execution
+
+To download and extract Pubator Central's data (default) run the following:
+
+```sh
+bash execute.sh
+```
+
+If the original Pubtator is desired run the above command with the following flag: --pubtator.
 
 ## License
 

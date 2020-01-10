@@ -1,8 +1,9 @@
 name: pubtator
 dependencies:
-- python=3.6.0
-- lxml=3.7.2
-- tqdm=4.11.2
-- pandas=0.20.2
+- python=3.8
+- lxml=4.4
+- tqdm
+- pandas=0.25.3
+- pip
 - pip:
     - git+https://github.com/en-dash/PyBioC@a21bd181ce3b89de791db4bb7db6ca1c48167648

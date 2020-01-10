@@ -92,16 +92,33 @@ def pubtator_stanza_to_article(lines):
     article["pubmed_id"] = title_heading[0]
     article["title"] = title_heading[2]
     title_len = len(title_heading[2])
+
     # abstract
     abstract_heading = lines[1].split("|")
     article["abstract"] = abstract_heading[2]
 
+    # Fix null characters
+    fixed_lines = [
+        str_with_null.replace('\x00', '')
+        for str_with_null in lines[2:]
+    ]
+
     # set up the csv reader
-    annts = csv.DictReader(lines[2:], fieldnames=['pubmed_id', 'start', 'end', 'term', 'type', 'tag_id'], delimiter="\t", quoting=csv.QUOTE_NONE)
+    annts = (
+        csv.DictReader(
+            fixed_lines, 
+            fieldnames=['pubmed_id', 'start', 'end', 'term', 'type', 'tag_id'], 
+            delimiter="\t", 
+            quoting=csv.QUOTE_NONE
+        )
+    )
+
     annts = list(annts)
+    
     for annt in annts:
         for key in 'start', 'end':
             annt[key] = int(annt[key])
+
     annts.sort(key=lambda x: x["start"])
     article["title_annot"] = filter(lambda x: x["start"] < title_len, annts)
     article["abstract_annot"] = filter(lambda x: x["start"] > title_len, annts)
