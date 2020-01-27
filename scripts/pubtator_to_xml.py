@@ -179,6 +179,13 @@ def convert_pubtator(input_path, output_path):
         article_generator = read_bioconcepts2pubtator_offsets(input_path)
         # Write each article in BioC format
         for article in tqdm.tqdm(article_generator):
+
+            # Skip the documents that have more than 1M characters
+            # Pubtator contains sections that are large list of author
+            # names which is why this check is needed
+            if len(article['abstract']) > 1e5:
+                continue
+
             document = BioCDocument()
             document.id = article["pubmed_id"]
 

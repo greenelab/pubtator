@@ -85,7 +85,7 @@ def get_tag_chunks(filename):
         filename -- the file to read through pandas
     """
     chunksize = 10 ** 6
-    for chunk in pd.read_table(filename, chunksize=chunksize):
+    for chunk in pd.read_csv(filename, chunksize=chunksize, sep="\t"):
         yield chunk
 
 def filter_tags(infile, outfile):

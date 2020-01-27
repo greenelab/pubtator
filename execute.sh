@@ -51,5 +51,27 @@ else
     --input data/pubtator-central-tags.tsv.xz \
     --output data/pubtator-central-hetnet-tags.tsv.xz
 
-fi
+  # Grab ids with full text
+  python scripts/map_ids.py \
+    --input data/pubtator-central-tags.tsv.xz \
+    --email "$1" \
+    --id_batch 100000
+    --output data/pubtator-pmids-to-pmcids.tsv
 
+  # Download full text from pubtator central
+  python scripts/download_full_text.py \
+    --input data/pubtator-pmids-to-pmcids.tsv \
+    --document_batch 100000 \
+    --output data/pubtator-central-full-text.xml
+
+  # Extract tags from the BioC XML 
+  python scripts/extract_tags.py \
+    --input data/pubtator-central-full-text.xml \
+    --output data/pubtator-central-full-text-tags.tsv.xz
+
+  # Filter-Convert tags to Hetnet IDs
+  python scripts/hetnet_id_extractor.py \
+    --input data/pubtator-central-full-text-tags.tsv.xz \
+    --output data/pubtator-central-full-hetnet-tags.tsv.xz
+
+fi
