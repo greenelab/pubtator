@@ -3,6 +3,7 @@ dependencies:
 - python=3.8
 - lxml=4.4
 - tqdm
+- requests
 - pandas=0.25.3
 - pip
 - pip:
