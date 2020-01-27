@@ -1,5 +1,6 @@
 import argparse
 import csv
+import re
 
 from lxml import etree as ET
 import tqdm
@@ -43,7 +44,7 @@ def extract_annotations(xml_path, tsv_path):
                     if infon.attrib["key"] == "type":
                         ant_type = infon.text
                     else:
-                        ant_id = infon.text
+                        ant_id = re.sub("(MESH:|CVCL:)", "", infon.text)
 
                 location, = annotation.iter('location')
                 offset = int(location.attrib['offset'])

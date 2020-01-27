@@ -19,10 +19,10 @@ Activate with `conda activate pubtator`.
 To download and extract Pubator Central's data (default) run the following:
 
 ```sh
-bash execute.sh
+bash execute.sh {email address here}
 ```
 
-If the original Pubtator is desired run the above command with the following flag: --pubtator.
+If the original Pubtator is desired run the above command with the following flag: --pubtator. You do not need to provide your email address when running the first version of Pubtator.
 
 ## License
 
