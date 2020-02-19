@@ -8,6 +8,7 @@ import tqdm
 import utilities
 
 
+
 def extract_annotations(xml_path, tsv_path):
     """
     Extract the annotations from pubtator xml formatted file
@@ -28,33 +29,42 @@ def extract_annotations(xml_path, tsv_path):
         fieldnames = ['pubmed_id', 'type', 'identifier', 'offset', 'end']
         writer = csv.DictWriter(tsv_file, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
-        tag_generator = ET.iterparse(xml_file, tag="document")
+        tag_generator = ET.iterparse(xml_file, tag="document", recover=True)
 
-        for event, document in tqdm.tqdm(tag_generator):
-            pubmed_id = document[0].text
+        try:
+            for event, document in tqdm.tqdm(tag_generator):
 
-            # cycle through all the annotation tags contained within document tag
-            for annotation in document.iter('annotation'):
+                pubmed_id = document[0].text
 
-                # not all annotations will contain an ID
-                if len(annotation) <= 3:
-                    continue
+                # cycle through all the annotation tags contained within document tag
+                for annotation in document.iter('annotation'):
 
-                for infon in annotation.iter('infon'):
-                    if infon.attrib["key"] == "type":
-                        ant_type = infon.text
-                    else:
-                        ant_id = re.sub("(MESH:|CVCL:)", "", infon.text)
+                    # not all annotations will contain an ID
+                    if len(annotation) <= 3:
+                        continue
 
-                location, = annotation.iter('location')
-                offset = int(location.attrib['offset'])
-                end = offset + int(location.attrib['length'])
-                row = {'pubmed_id': pubmed_id, 'type': ant_type, 'identifier': ant_id, 'offset': offset, 'end': end}
-                writer.writerow(row)
+                    for infon in annotation.iter('infon'):
+                        if infon.attrib["key"] == "type":
+                            ant_type = infon.text
+                        else:
+                            
+                            if not infon.text:
+                                continue
 
-            # prevent memory overload
-            document.clear()
+                            ant_id = re.sub("(MESH:|CVCL:)", "", str(infon.text))
 
+                    location, = annotation.iter('location')
+                    offset = int(location.attrib['offset'])
+                    end = offset + int(location.attrib['length'])
+                    row = {'pubmed_id': pubmed_id, 'type': ant_type, 'identifier': ant_id, 'offset': offset, 'end': end}
+                    writer.writerow(row)
+
+                # prevent memory overload
+                document.clear()
+
+        except Exception as e:
+            print(e)
+            print(document[0].text)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Export tags in a BioC XML file to a TSV table')

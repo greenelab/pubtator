@@ -54,14 +54,12 @@ else
   # Grab ids with full text
   python scripts/map_ids.py \
     --input data/pubtator-central-tags.tsv.xz \
-    --email "$1" \
-    --id_batch 100000
     --output data/pubtator-pmids-to-pmcids.tsv
 
   # Download full text from pubtator central
   python scripts/download_full_text.py \
     --input data/pubtator-pmids-to-pmcids.tsv \
-    --document_batch 100000 \
+    --document_batch 100 \
     --output data/pubtator-central-full-text.xml
 
   # Extract tags from the BioC XML 
