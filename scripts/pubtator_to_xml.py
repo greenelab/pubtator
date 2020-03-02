@@ -179,42 +179,47 @@ def convert_pubtator(input_path, output_path):
         article_generator = read_bioconcepts2pubtator_offsets(input_path)
         # Write each article in BioC format
         for article in tqdm.tqdm(article_generator):
+            try:
+                # Skip the documents that have more than 1M characters
+                # Pubtator contains sections that are large list of author
+                # names which is why this check is needed
+                if len(article['abstract']) > 1e5:
+                    continue
 
-            # Skip the documents that have more than 1M characters
-            # Pubtator contains sections that are large list of author
-            # names which is why this check is needed
-            if len(article['abstract']) > 1e5:
-                continue
+                document = BioCDocument()
+                document.id = article["pubmed_id"]
 
-            document = BioCDocument()
-            document.id = article["pubmed_id"]
+                title_passage = BioCPassage()
+                title_passage.put_infon('type', 'title')
+                title_passage.offset = '0'
+                title_passage.text = article["title"]
 
-            title_passage = BioCPassage()
-            title_passage.put_infon('type', 'title')
-            title_passage.offset = '0'
-            title_passage.text = article["title"]
+                abstract_passage = BioCPassage()
+                abstract_passage.put_infon('type', 'abstract')
+                abstract_passage.offset = str(len(article["title"]) + 1)
+                abstract_passage.text = article["abstract"]
 
-            abstract_passage = BioCPassage()
-            abstract_passage.put_infon('type', 'abstract')
-            abstract_passage.offset = article["abstract"]
-            abstract_passage.text = article["abstract"]
+                id_index = 0
+                for tag in article["title_annot"]:
+                    title_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
+                    id_index += 1
 
-            id_index = 0
-            for tag in article["title_annot"]:
-                title_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
-                id_index += 1
+                for tag in article["abstract_annot"]:
+                    abstract_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
+                    id_index += 1
 
-            for tag in article["abstract_annot"]:
-                abstract_passage.annotations.append(bioconcepts2pubtator_annotations(tag, id_index))
-                id_index += 1
+                document.add_passage(title_passage)
+                document.add_passage(abstract_passage)
 
-            document.add_passage(title_passage)
-            document.add_passage(abstract_passage)
-
-            step_parent = E('collection')
-            writer._build_documents([document], step_parent)
-            xml_file.write(tostring(step_parent[0], pretty_print=True))
-            step_parent.clear()
+                step_parent = E('collection')
+                writer._build_documents([document], step_parent)
+                xml_file.write(tostring(step_parent[0], pretty_print=True))
+                step_parent.clear()
+            
+            except Exception as e:
+                print(e)
+                print(f"Article that broke: {article['pubmed_id']}")
+                step_parent.clear()
 
         # Write the closing tag of the xml document
         xml_file.write(xml_tail + b'\n')
