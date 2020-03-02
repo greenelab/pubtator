@@ -8,4 +8,4 @@ dependencies:
 - pip
 - pip:
     - git+https://github.com/en-dash/PyBioC@a21bd181ce3b89de791db4bb7db6ca1c48167648
-    
+    - ratelimit
