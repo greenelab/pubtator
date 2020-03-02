@@ -49,6 +49,9 @@ def download_full_text(ids_file, document_batch, temp_dir):
     # This script only uses biocxml 
     pubtator_central_api = "https://www.ncbi.nlm.nih.gov/research/pubtator-api/publications/export/biocxml?"
 
+    # Create the directory if it doesn't exist
+    Path(f"{temp_dir}").mkdir(parents=True, exist_ok=True)
+   
     for idx, pmcid_batch_df in tqdm.tqdm(enumerate(read_id_chunk(ids_file, document_batch))):
         query = f"{pubtator_central_api}pmcids={','.join(pmcid_batch_df.PMCID.values)}"
         

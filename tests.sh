@@ -17,12 +17,12 @@ python scripts/hetnet_id_extractor.py \
 
 python scripts/map_ids.py \
 	--input data/example/3-sample-tags.tsv \
-	--email grad@greenelab.com \
-	--output data/example/5-sample-pmids-to-pmcids.tsv
+	--output data/example/5-sample-pmids-to-pmcids.tsv \
 
 python scripts/download_full_text.py \
 	--input data/example/5-sample-pmids-to-pmcids.tsv \
-	--output data/example/6-sample-full-text.xml
+	--output data/example/6-sample-full-text.xml \
+	--temp_dir data/temp
 
 # Extract tags from the BioC XML 
 python scripts/extract_tags.py \
