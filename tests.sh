@@ -18,6 +18,7 @@ python scripts/hetnet_id_extractor.py \
 python scripts/map_ids.py \
 	--input data/example/3-sample-tags.tsv \
 	--output data/example/5-sample-pmids-to-pmcids.tsv \
+	--debug
 
 python scripts/download_full_text.py \
 	--input data/example/5-sample-pmids-to-pmcids.tsv \
