@@ -29,7 +29,7 @@ def extract_annotations(xml_path, tsv_path):
         fieldnames = ['pubmed_id', 'type', 'identifier', 'offset', 'end']
         writer = csv.DictWriter(tsv_file, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
-        tag_generator = ET.iterparse(xml_file, tag="document", recover=True)
+        tag_generator = ET.iterparse(xml_file, tag="document", recover=True, encoding="utf-8")
 
         try:
             for event, document in tqdm.tqdm(tag_generator):

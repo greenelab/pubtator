@@ -218,7 +218,7 @@ def convert_pubtator(input_path, output_path):
             
             except Exception as e:
                 print(e)
-                print(f"Article that broke: {article}")
+                print(f"Article that broke: {article['pubmed_id']}")
                 step_parent.clear()
 
         # Write the closing tag of the xml document

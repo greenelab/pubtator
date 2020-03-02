@@ -42,7 +42,7 @@ def map_ids(ids_file, id_output):
         dtype={
             "PMID": str,
             "Year": int,
-            "Issue": float,
+            "Issue":str
         }
     )
 
