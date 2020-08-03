@@ -10,7 +10,10 @@ from scripts.hetnet_id_extractor import filter_tags
 from scripts.map_ids import map_ids
 from scripts.pubtator_to_xml import convert_pubtator
 
-parser = argparse.ArgumentParser(description='Runs Pubtator Extractor')
+parser = argparse.ArgumentParser(
+    description='Runs Pubtator/Pubtator Central Parser Pipeline'
+)
+
 parser.add_argument(
     "--config", help="The config file for the extractor.", 
     default="config_files/pubtator_central_config.json"
