@@ -5,7 +5,7 @@ import re
 from lxml import etree as ET
 import tqdm
 
-import utilities
+import scripts.utilities as utilities
 
 
 

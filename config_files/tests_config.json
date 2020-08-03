@@ -1,0 +1,54 @@
+{
+    "repository":{
+        "url":"ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/bioconcepts2pubtatorcentral.offset.gz",
+        "download_folder":"download",
+        "skip":true
+    },
+    
+    "pubtator_to_xml": {
+        "documents":"data/example/1-sample-annotations.txt",
+        "output":"data/example/2-sample-docs.xml",
+        "skip":false
+    },
+    
+    "extract_tags":{
+        "input":"data/example/2-sample-docs.xml",
+        "output":"data/example/3-sample-tags.tsv",
+        "skip":false
+    },
+    
+    "hetnet_id_extractor":{
+        "input":"data/example/3-sample-tags.tsv",
+        "output":"data/example/4-hetnet-tags.tsv",
+        "skip":false
+    },
+
+    "map_pmid_to_pmcids":{
+        "input":"data/example/3-sample-tags.tsv",
+        "output":"data/example/5-sample-pmids-to-pmcids.tsv",
+        "debug":true,
+        "skip":false
+    },
+
+    "download_full_text":{
+        "input":"data/example/5-sample-pmids-to-pmcids.tsv",
+        "document_batch":100,
+        "output":"data/example/6-sample-full-text.xml",
+        "temp_dir":"data/temp",
+        "log_file":"batch_log.tsv",
+        "skip":false
+    },
+
+    "extract_full_text_tags":{
+        "input":"data/example/6-sample-full-text.xml",
+        "output":"data/example/7-sample-full-text-tags.tsv",
+        "skip":false
+    },
+
+    "hetnet_id_extractor_full_text":{
+        "input":"data/example/7-sample-full-text-tags.tsv",
+        "output":"data/example/8-hetnet-full-text-tags.tsv",
+        "skip":false
+    }
+
+}

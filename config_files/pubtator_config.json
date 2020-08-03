@@ -1,0 +1,25 @@
+{
+    "repository":{
+        "url":"ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/bioconcepts2pubtator_offsets.gz",
+        "download_folder":"download",
+        "skip":false
+    },
+    
+    "pubtator_to_xml": {
+        "documents":"download/bioconcepts2pubtator_offsets.gz",
+        "output":"data/pubtator-docs.xml.xz",
+        "skip":false
+    },
+
+    "extract_tags":{
+        "input":"data/pubtator-docs.xml.xz",
+        "output":"data/pubtator-tags.tsv.xz",
+        "skip":false
+    },
+    
+    "hetnet_id_extractor":{
+        "input":"data/pubtator-tags.tsv.xz",
+        "output":"data/pubtator-hetnet-tags.tsv.xz",
+        "skip":false
+    }
+}
