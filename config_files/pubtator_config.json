@@ -1,5 +1,5 @@
 {
-    "repository":{
+    "repository_download":{
         "url":"ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTator/bioconcepts2pubtator_offsets.gz",
         "download_folder":"download",
         "skip":false

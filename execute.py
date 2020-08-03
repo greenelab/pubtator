@@ -21,12 +21,12 @@ args = parser.parse_args()
 configuration = json.load(open(args.config, "r"))
 
 if (
-    "repository" in configuration and 
-    not configuration["repository"]["skip"]
+    "repository_download" in configuration and 
+    not configuration["repository_download"]["skip"]
 ):
     wget.download(
-        configuration["repository"]['url'], 
-        out=configuration["repository"]['download_folder']
+        configuration["repository_download"]['url'], 
+        out=configuration["repository_download"]['download_folder']
     )
 
 if (
