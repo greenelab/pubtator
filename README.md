@@ -4,25 +4,45 @@
 
 [PubTator](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTator/) and its 2.0 version ([PubTator Central](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/PubTatorCentral/)) uses text mining to tag PubMed abstracts/artciles with standardized concepts. This repository retrieves and processes PubTator annotations for use in [`greenelab/snorkeling`](https://github.com/greenelab/snorkeling) and elsewhere.
 
-## Environment
+# Get Started
 
-Install the [conda](https://conda.io) environment specified in [`environment.yml`](environment.yml) by running:
+## Set-up Environment
+
+### Conda
+
+1. Install the [conda](https://conda.io) environment.
+2. Create the pubtator environmenmt by running:
 
 ```sh
-conda env create --file environment.yml
+conda create --name Pubtator python=3.8
+```
+3. Install packages via pip by running the following:
+
+```sh
+pip install -r requirements.txt
 ```
 
-Activate with `conda activate pubtator`.
+4. Activate with `conda activate pubtator`.
+
+### Pip
+
+1. Make sure you have python version **3.8** installed.
+2. Install packages by running the following:
+
+```sh
+pip install -r requirements.txt
+```
+
 
 ## Execution
 
-To download and extract Pubator Central's data (default) run the following:
+To start processing Pubtator/Pubtator Central run the following command:
 
 ```sh
-bash execute.sh {email address here}
+python execute.py --config config_files/pubtator_central_config.json
 ```
 
-If the original Pubtator is desired run the above command with the following flag: --pubtator. You do not need to provide your email address when running the first version of Pubtator.
+If the original Pubtator is desired replace `pubtator_central_config.json` with `pubtator_config.json`. The json file contains all the necessary parameters needed to run. More information for the json file can be found [here](config_files).
 
 ## License
 
