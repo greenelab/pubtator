@@ -19,17 +19,17 @@ To skip a step just replace the skip field with true instead of false.
 Example:
 ```json
 {
-  "pipieline step 1":{
+  "pipeline step 1":{
     "param1":"param1_value",
     "param2":"param2_value",
     "skip":false
     },
-   "pipieline step 2":{
+   "pipeline step 2":{
     "param1":"param1_value",
     "param2":"param2_value",
     "skip":false
     },
-   "pipieline step 3":{
+   "pipeline step 3":{
     "param1":"param1_value",
     "param2":"param2_value",
     "skip":false
