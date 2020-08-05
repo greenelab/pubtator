@@ -27,52 +27,68 @@ if (
     "repository_download" in configuration and 
     not configuration["repository_download"]["skip"]
 ):
+    print("Executing repository_download...")
     wget.download(
         configuration["repository_download"]['url'], 
         out=configuration["repository_download"]['download_folder']
     )
+    
+    del configuration["repository_download"]
 
 if (
     "pubtator_to_xml" in configuration and 
     not configuration["pubtator_to_xml"]["skip"]
 ):
+    print("Executing pubtator_to_xml...")
     convert_pubtator(
         configuration["pubtator_to_xml"]['documents'], 
         configuration["pubtator_to_xml"]['output']
     )
+    
+    del configuration["pubtator_to_xml"]
 
 if (
     "extract_tags" in configuration and 
     not configuration["extract_tags"]["skip"]
 ):
+    print("Executing extract_tags...")
     extract_annotations(
         configuration["extract_tags"]["input"], 
         configuration["extract_tags"]["output"]
     )
     
+    del configuration["extract_tags"]
+    
 if (
     "hetnet_id_extractor" in configuration and 
     not configuration["hetnet_id_extractor"]["skip"]
 ):
+    print("Executing hetnet_id_extractor...")
     filter_tags(
         configuration["hetnet_id_extractor"]["input"],
         configuration["hetnet_id_extractor"]["output"]
     )
-
+    
+    del configuration["hetnet_id_extractor"]
+    
 if (
-    "map_pmid_to_pmcids" in configuration and 
-    not configuration["map_pmid_to_pmcids"]["skip"]
+    "map_pmids_to_pmcids" in configuration and 
+    not configuration["map_pmids_to_pmcids"]["skip"]
 ):
+    print("Executing map_pmids_to_pmcids...")
     map_ids(
-        configuration["map_pmid_to_pmcids"]["input"], 
-        configuration["map_pmid_to_pmcids"]["output"], 
-        configuration["map_pmid_to_pmcids"]["debug"]
+        configuration["map_pmids_to_pmcids"]["input"], 
+        configuration["map_pmids_to_pmcids"]["output"], 
+        configuration["map_pmids_to_pmcids"]["debug"]
     )
+    
+    del configuration["map_pmids_to_pmcids"]
     
 if (
     "download_full_text" in configuration and 
     not configuration["download_full_text"]["skip"]
 ):
+    print("Executing download_full_text...")
     download_full_text(
         configuration["download_full_text"]["input"],
         configuration["download_full_text"]["document_batch"], 
@@ -85,20 +101,36 @@ if (
         configuration["download_full_text"]["output"]
     )
     
+    del configuration["download_full_text"]
+    
 if (
     "extract_full_text_tags" in configuration and 
     not configuration["extract_full_text_tags"]["skip"]
 ):
+    print("Executing extract_full_text_tags...")
     extract_annotations(
         configuration["extract_full_text_tags"]["input"], 
         configuration["extract_full_text_tags"]["output"]
     )
     
+    del configuration["extract_full_text_tags"]
+
 if (
     "hetnet_id_extractor_full_text" in configuration and 
     not configuration["hetnet_id_extractor_full_text"]["skip"]
 ):
+    print("Executing hetnet_id_extractor_full_text...")
     filter_tags(
         configuration["hetnet_id_extractor_full_text"]["input"], 
         configuration["hetnet_id_extractor_full_text"]["output"]
+    )
+    
+    del configuration["hetnet_id_extractor_full_text"]
+
+if len(configuration) > 0:
+    not_executed_commands = '\n'.join(configuration.keys())
+    print(
+        "\n"
+        "Commands not executed:\n"
+        f"{not_executed_commands}"
     )

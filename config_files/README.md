@@ -12,11 +12,10 @@
 
 Each configuration file is in json format and contains parameters for each step within the pubtator pipeline. 
 All files are organized by order of operation, which means the very first step occurs at the top and the subsequent step comes right afterwards.
-Every step can be skipped, which allows one to continue the pipeline at any step they choose. 
-To skip a step just replace the skip field with true instead of false. 
-**Note: make sure true is lowercase as json requires it to be lowercase.**
+Every step can be skipped, which allows one to continue the pipeline at any step one chooses. 
+Please refer to [CONFIG.md](CONFIG.md) for more details on each pipeline step and their respective parameters.
 
-Example:
+Example config file:
 ```json
 {
   "pipeline step 1":{

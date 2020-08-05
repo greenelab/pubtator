@@ -23,7 +23,7 @@
         "skip":false
     },
 
-    "map_pmid_to_pmcids":{
+    "map_pmids_to_pmcids":{
         "input":"data/pubtator-central-tags.tsv.xz",
         "output":"data/pubtator-pmids-to-pmcids.tsv",
         "debug":false,

@@ -23,7 +23,7 @@
         "skip":false
     },
 
-    "map_pmid_to_pmcids":{
+    "map_pmids_to_pmcids":{
         "input":"data/example/3-sample-tags.tsv",
         "output":"data/example/5-sample-pmids-to-pmcids.tsv",
         "debug":true,

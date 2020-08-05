@@ -3,6 +3,7 @@ from pathlib import Path
 import requests
 import time
 import os
+import sys
 
 import lxml.etree as ET
 from lxml.etree import XMLSyntaxError
@@ -53,22 +54,27 @@ def download_full_text(ids_file, document_batch, temp_dir, log_file="batch_log.t
     Path(f"{temp_dir}").mkdir(parents=True, exist_ok=True)
     
     # Load a logger to track which ids have been queried
-    if not Path(f"{temp_dir}/{log_file}").exists():
+    log_file_path = Path(f"{temp_dir}/{log_file}")
+    if not log_file_path.exists():
         log = pd.DataFrame([], columns=["batch", "pmcid"])
         log.to_csv(
-            f"{temp_dir}/{log_file}", 
+            log_file_path.resolve(), 
             sep="\t", index=False
         )
+
     else:
-        log = pd.read_csv(f"{temp_dir}/{log_file}", sep="\t")
+        log = pd.read_csv(
+            log_file_path.resolve(),
+            sep="\t"
+        )
    
     # test each query against Pubtator's API
     for idx, pmcid_batch_df in tqdm.tqdm(enumerate(read_id_chunk(ids_file, document_batch))):
         
         # Measure the ids that haven't been seen by the logger
         already_seen = (
-            set(pmcid_batch_df.PMCID.values.tolist())
-            .difference(set(log.pmcid.values.tolist()))
+            set(pmcid_batch_df.PMCID.values)
+            .difference(set(log.pmcid.values))
         )
         
         # If all ids have been processed skip batch
@@ -77,8 +83,9 @@ def download_full_text(ids_file, document_batch, temp_dir, log_file="batch_log.t
 
         query = f"{pubtator_central_api}pmcids={','.join(pmcid_batch_df.PMCID.values)}"
         response = call_api(query)
-
-        with open(f"{temp_dir}/batch_{idx}.xml", "wb") as xml_file:
+        
+        batch_file_path = Path(f"{temp_dir}/batch_{idx}.xml")
+        with open(batch_file_path.resolve(), "wb") as xml_file:
             try:
                 root = ET.fromstring(
                     bytes(response.text, encoding="utf8")
@@ -100,8 +107,13 @@ def download_full_text(ids_file, document_batch, temp_dir, log_file="batch_log.t
                 )
 
             except Exception as e:
-                print(f"There is an error processing batch {idx}.")
-                print(f"Here is the query:{query}.")
+                sys.stderr.write(
+                    f"There is an error processing batch {idx}."
+                )
+                
+                sys.stderr.write(
+                    f"Here is the query:{query}."
+                )
         
         
 def merge_full_text(temp_dir, output):
@@ -145,8 +157,13 @@ def merge_full_text(temp_dir, output):
                     xml_file.write(ET.tostring(document, pretty_print=True))
             
             except XMLSyntaxError as e:
-                print(f"Please check {file}! There is an error at: {e}")
-                print("I am skipping this file.")
+                sys.stderr.write(
+                    f"Please check {file}! There is an error at: {e}",
+                )
+                
+                sys.stderr.write(
+                    "I am skipping this file.",
+                )
 
         xml_file.write(b"</collection>\n")
 
