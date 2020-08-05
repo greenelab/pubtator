@@ -71,7 +71,7 @@ Following Parameters for this section:
 ## Download Full Text
 
 This is the fifth step of the Pubtator pipeline.
-This step queries Pubtator Central's api and downloads annotated full text if present.
+This step queries Pubtator Central's api and downloads annotated full text if text is present.
 
 Following Parameters for this section:
 | Param | Description | Accepted Values |
@@ -85,9 +85,9 @@ Following Parameters for this section:
 ## Extract Full Text Tags
 
 This is the sixth step of the Pubtator pipeline.
-Please refer to [Extract Tags Section](##extract-tags).
+Please refer to [Extract Tags Section](#extract-tags).
 
 ## Hetnet ID Extractor Full Text
 
 This is the last step of the Pubtator pipeline.
-Please refer to [Hetnet ID Extractor Section](##hetnet-id-extractor).
+Please refer to [Hetnet ID Extractor Section](#hetnet-id-extractor).
