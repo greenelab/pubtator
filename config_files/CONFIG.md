@@ -85,9 +85,12 @@ Following Parameters for this section:
 ## Extract Full Text Tags
 
 This is the sixth step of the Pubtator pipeline.
-Please refer to [Extract Tags Section](#extract-tags).
+This step extracts tags from full text documents.
+Please refer to [Extract Tags Section](#extract-tags) for parameter details.
 
 ## Hetnet ID Extractor Full Text
 
 This is the last step of the Pubtator pipeline.
-Please refer to [Hetnet ID Extractor Section](#hetnet-id-extractor).
+This step filters tags to only have Hetionet tags.
+Please refer to [Hetnet ID Extractor Section](#hetnet-id-extractor) for parameter details.
+
