@@ -85,9 +85,9 @@ Following Parameters for this section:
 ## Extract Full Text Tags
 
 This is the sixth step of the Pubtator pipeline.
-Please refer to [Extract Tags Section](## Extract Tags).
+Please refer to [Extract Tags Section](##extract-tags).
 
 ## Hetnet ID Extractor Full Text
 
 This is the last step of the Pubtator pipeline.
-Please refer to [Hetnet ID Extractor Section](## Hetnet ID Extractor).
+Please refer to [Hetnet ID Extractor Section](##hetnet-id-extractor).
