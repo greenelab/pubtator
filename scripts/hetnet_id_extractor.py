@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 import tqdm
 
-import utilities
+import scripts.utilities as utilities
 
 def filter_tags(infile, outfile):
     """ This method filters pubtator tags to consist of only 

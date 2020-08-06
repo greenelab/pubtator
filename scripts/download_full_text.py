@@ -3,6 +3,7 @@ from pathlib import Path
 import requests
 import time
 import os
+import sys
 
 import lxml.etree as ET
 from lxml.etree import XMLSyntaxError
@@ -33,7 +34,7 @@ def read_id_chunk(id_file, batch_size):
     for id_batch in pd.read_csv(id_file, sep="\t", chunksize=batch_size):
         yield id_batch
 
-def download_full_text(ids_file, document_batch, temp_dir):
+def download_full_text(ids_file, document_batch, temp_dir, log_file="batch_log.tsv"):
     """
     Download full text from Pubtator Central.
     This section involves heavy api calls and subject to get blocked.
@@ -51,22 +52,70 @@ def download_full_text(ids_file, document_batch, temp_dir):
 
     # Create the directory if it doesn't exist
     Path(f"{temp_dir}").mkdir(parents=True, exist_ok=True)
-   
-    for idx, pmcid_batch_df in tqdm.tqdm(enumerate(read_id_chunk(ids_file, document_batch))):
-        query = f"{pubtator_central_api}pmcids={','.join(pmcid_batch_df.PMCID.values)}"
-        
-        response = call_api(query)
+    
+    # Load a logger to track which ids have been queried
+    log_file_path = Path(f"{temp_dir}/{log_file}")
+    if not log_file_path.exists():
+        log = pd.DataFrame([], columns=["batch", "pmcid"])
+        log.to_csv(
+            log_file_path.resolve(), 
+            sep="\t", index=False
+        )
 
-        with open(f"{temp_dir}/batch_{idx}.xml", "wb") as xml_file:
+    else:
+        log = pd.read_csv(
+            log_file_path.resolve(),
+            sep="\t"
+        )
+   
+    # test each query against Pubtator's API
+    for idx, pmcid_batch_df in tqdm.tqdm(enumerate(read_id_chunk(ids_file, document_batch))):
+        
+        # Measure the ids that haven't been seen by the logger
+        already_seen = (
+            set(pmcid_batch_df.PMCID.values)
+            .difference(set(log.pmcid.values))
+        )
+        
+        # If all ids have been processed skip batch
+        if len(already_seen) == 0:
+            continue
+
+        query = f"{pubtator_central_api}pmcids={','.join(pmcid_batch_df.PMCID.values)}"
+        response = call_api(query)
+        
+        batch_file_path = Path(f"{temp_dir}/batch_{idx}.xml")
+        with open(batch_file_path.resolve(), "wb") as xml_file:
             try:
                 root = ET.fromstring(
                     bytes(response.text, encoding="utf8")
                 )
 
                 xml_file.write(ET.tostring(root, pretty_print=True))
-            except Exception as e:
-                print(query)
+                
+                # Save to the logger each pmcid batch
+                (
+                    log
+                    .assign(
+                        batch=[idx]*pmcid_batch_df.shape[0], 
+                        pmcid=pmcid_batch_df.PMCID.values.tolist()
+                    )
+                    .to_csv(
+                        f"{temp_dir}/{log_file}", sep="\t",
+                        mode="a", header=False, index=False
+                    )
+                )
 
+            except Exception as e:
+                sys.stderr.write(
+                    f"There is an error processing batch {idx}."
+                )
+                
+                sys.stderr.write(
+                    f"Here is the query:{query}."
+                )
+        
+        
 def merge_full_text(temp_dir, output):
     """
     Download full text from Pubtator Central.
@@ -108,8 +157,13 @@ def merge_full_text(temp_dir, output):
                     xml_file.write(ET.tostring(document, pretty_print=True))
             
             except XMLSyntaxError as e:
-                print(f"Please check {file}! There is an error at: {e}")
-                print("I am skipping this file.")
+                sys.stderr.write(
+                    f"Please check {file}! There is an error at: {e}",
+                )
+                
+                sys.stderr.write(
+                    "I am skipping this file.",
+                )
 
         xml_file.write(b"</collection>\n")
 
@@ -118,8 +172,9 @@ if __name__ == '__main__':
     parser.add_argument("--input", help="a tsv file that contains pmids to query for full text", required=True)
     parser.add_argument("--document_batch", help="the number of documents to query at once", default=100, type=int)
     parser.add_argument("--temp_dir", help="The directory to store the temporary files", required=True, type=str)
+    parser.add_argument("--log_file", help="The directory to store the temporary files", default="batch_log.tsv", type=str)
     parser.add_argument("--output", help="the name of the outputfile containing full text documents", default="pubtator_full_text.xml")
     args = parser.parse_args()
 
-    download_full_text(args.input, args.document_batch, args.temp_dir)
+    download_full_text(args.input, args.document_batch, args.temp_dir, args.log_file)
     merge_full_text(args.temp_dir, args.output)

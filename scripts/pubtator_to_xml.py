@@ -11,7 +11,7 @@ from lxml.builder import E
 from lxml.etree import tostring
 import tqdm
 
-import utilities
+import scripts.utilities as utilities
 
 
 def bioconcepts2pubtator_annotations(tag, index):
