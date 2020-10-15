@@ -14,7 +14,7 @@
 2. Create the pubtator environmenmt by running:
 
 ```sh
-conda create --name Pubtator python=3.8
+conda create --name pubtator python=3.8
 ```
 3. Install packages via pip by running the following:
 

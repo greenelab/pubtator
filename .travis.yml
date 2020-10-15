@@ -9,7 +9,7 @@ before_install:
   - conda update --quiet conda
   - conda info --all
 install:
-  - conda create --name Pubtator python=3.8
+  - conda create --name pubtator python=3.8
   - source activate pubtator
   - pip install -r requirements.txt
 script:
