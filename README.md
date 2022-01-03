@@ -6,6 +6,11 @@
 
 # Get Started
 
+## **Depreciation Notice**
+
+If you have arrived at this page in order to convert Pubtator into BioCXML format, you no longer need to. 
+Pubtator Central now provides their own BioCXML files which can be found [here](https://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/PubTatorCentral_BioCXML/).
+
 ## Set-up Environment
 
 ### Conda
