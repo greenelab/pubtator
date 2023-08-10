@@ -4,4 +4,5 @@ ratelimit==2.2.1
 requests==2.22.0
 tqdm==4.11.2
 wget==3.2
+numpy==1.23.1
 git+https://github.com/en-dash/PyBioC@a21bd181ce3b89de791db4bb7db6ca1c48167648
